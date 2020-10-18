@@ -8,32 +8,40 @@
 
 
 void
-airport_prog_1( char* host )
+airport_prog_1(char *host)
 {
 	CLIENT *clnt;
 	airportList  *result_1;
 	char  callplaces_1_arg;
-	clnt = clnt_create(host, AIRPORT_PROG, AIRPORT_VERS, "udp");
+
+#ifndef	DEBUG
+	clnt = clnt_create (host, AIRPORT_PROG, AIRPORT_VERS, "udp");
 	if (clnt == NULL) {
-		clnt_pcreateerror(host);
-		exit(1);
+		clnt_pcreateerror (host);
+		exit (1);
 	}
+#endif	/* DEBUG */
+
 	result_1 = callplaces_1(&callplaces_1_arg, clnt);
-	if (result_1 == NULL) {
-		clnt_perror(clnt, "call failed:");
+	if (result_1 == (airportList *) NULL) {
+		clnt_perror (clnt, "call failed");
 	}
-	clnt_destroy( clnt );
+#ifndef	DEBUG
+	clnt_destroy (clnt);
+#endif	 /* DEBUG */
 }
 
 
-main( int argc, char* argv[] )
+int
+main (int argc, char *argv[])
 {
 	char *host;
 
-	if(argc < 2) {
-		printf("usage: %s server_host\n", argv[0]);
-		exit(1);
+	if (argc < 2) {
+		printf ("usage: %s server_host\n", argv[0]);
+		exit (1);
 	}
 	host = argv[1];
-	airport_prog_1( host );
+	airport_prog_1 (host);
+exit (0);
 }

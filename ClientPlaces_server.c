@@ -9,12 +9,11 @@
 airportList *
 callplaces_1_svc(char *argp, struct svc_req *rqstp)
 {
-
 	static airportList  result;
 
 	/*
 	 * insert server code here
 	 */
 
-	return(&result);
+	return &result;
 }

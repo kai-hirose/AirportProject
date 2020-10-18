@@ -6,9 +6,12 @@
 #ifndef _CLIENTPLACES_H_RPCGEN
 #define _CLIENTPLACES_H_RPCGEN
 
-#define RPCGEN_VERSION	199506
-
 #include <rpc/rpc.h>
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 
 struct airport {
@@ -19,28 +22,12 @@ struct airport {
 	double distance;
 };
 typedef struct airport airport;
-#ifdef __cplusplus
-extern "C" bool_t xdr_airport(XDR *, airport*);
-#elif __STDC__
-extern  bool_t xdr_airport(XDR *, airport*);
-#else /* Old Style C */
-bool_t xdr_airport();
-#endif /* Old Style C */
-
 
 struct airportList {
 	int error;
 	airport array[5];
 };
 typedef struct airportList airportList;
-#ifdef __cplusplus
-extern "C" bool_t xdr_airportList(XDR *, airportList*);
-#elif __STDC__
-extern  bool_t xdr_airportList(XDR *, airportList*);
-#else /* Old Style C */
-bool_t xdr_airportList();
-#endif /* Old Style C */
-
 
 struct KDNode {
 	struct KDNode *right;
@@ -49,14 +36,6 @@ struct KDNode {
 	double lon;
 };
 typedef struct KDNode KDNode;
-#ifdef __cplusplus
-extern "C" bool_t xdr_KDNode(XDR *, KDNode*);
-#elif __STDC__
-extern  bool_t xdr_KDNode(XDR *, KDNode*);
-#else /* Old Style C */
-bool_t xdr_KDNode();
-#endif /* Old Style C */
-
 
 struct TrieNode {
 	struct TrieNode *TN;
@@ -65,32 +44,41 @@ struct TrieNode {
 	double lon;
 };
 typedef struct TrieNode TrieNode;
-#ifdef __cplusplus
-extern "C" bool_t xdr_TrieNode(XDR *, TrieNode*);
-#elif __STDC__
-extern  bool_t xdr_TrieNode(XDR *, TrieNode*);
-#else /* Old Style C */
-bool_t xdr_TrieNode();
-#endif /* Old Style C */
 
+#define AIRPORT_PROG 0x32320776
+#define AIRPORT_VERS 1
 
-#define AIRPORT_PROG ((rpc_uint)0x32320776)
-#define AIRPORT_VERS ((rpc_uint)1)
-
-#ifdef __cplusplus
-#define callPlaces ((rpc_uint)1)
-extern "C" airportList * callplaces_1(char *, CLIENT *);
-extern "C" airportList * callplaces_1_svc(char *, struct svc_req *);
-
-#elif __STDC__
-#define callPlaces ((rpc_uint)1)
+#if defined(__STDC__) || defined(__cplusplus)
+#define callPlaces 1
 extern  airportList * callplaces_1(char *, CLIENT *);
 extern  airportList * callplaces_1_svc(char *, struct svc_req *);
+extern int airport_prog_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
-#else /* Old Style C */
-#define callPlaces ((rpc_uint)1)
+#else /* K&R C */
+#define callPlaces 1
 extern  airportList * callplaces_1();
 extern  airportList * callplaces_1_svc();
-#endif /* Old Style C */
+extern int airport_prog_1_freeresult ();
+#endif /* K&R C */
+
+/* the xdr functions */
+
+#if defined(__STDC__) || defined(__cplusplus)
+extern  bool_t xdr_airport (XDR *, airport*);
+extern  bool_t xdr_airportList (XDR *, airportList*);
+extern  bool_t xdr_KDNode (XDR *, KDNode*);
+extern  bool_t xdr_TrieNode (XDR *, TrieNode*);
+
+#else /* K&R C */
+extern bool_t xdr_airport ();
+extern bool_t xdr_airportList ();
+extern bool_t xdr_KDNode ();
+extern bool_t xdr_TrieNode ();
+
+#endif /* K&R C */
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* !_CLIENTPLACES_H_RPCGEN */
