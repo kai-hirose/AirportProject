@@ -3,8 +3,8 @@
  * It was generated using rpcgen.
  */
 
-#ifndef _CLIENTPLACES_H_RPCGEN
-#define _CLIENTPLACES_H_RPCGEN
+#ifndef _PLACESAIRPORT_H_RPCGEN
+#define _PLACESAIRPORT_H_RPCGEN
 
 #include <rpc/rpc.h>
 
@@ -13,14 +13,6 @@
 extern "C" {
 #endif
 
-
-struct place {
-	char *name;
-	char state[2];
-	double lat;
-	double lon;
-};
-typedef struct place place;
 
 struct airport {
 	int code;
@@ -37,13 +29,13 @@ struct airportList {
 };
 typedef struct airportList airportList;
 
-struct TrieNode {
-	struct TrieNode *TN;
-	int index;
+struct KDNode {
+	struct KDNode *right;
+	struct KDNode *left;
 	double lat;
 	double lon;
 };
-typedef struct TrieNode TrieNode;
+typedef struct KDNode KDNode;
 
 struct coordinate {
 	double lat;
@@ -51,36 +43,34 @@ struct coordinate {
 };
 typedef struct coordinate coordinate;
 
-#define AIRPORT_PROG 0x3232077A
+#define AIRPORT_PROG 0x3232077B
 #define AIRPORT_VERS 1
 
 #if defined(__STDC__) || defined(__cplusplus)
-#define callPlaces 1
-extern  airportList * callplaces_1(char *, CLIENT *);
-extern  airportList * callplaces_1_svc(char *, struct svc_req *);
+#define callAirport 1
+extern  airportList * callairport_1(airport *, CLIENT *);
+extern  airportList * callairport_1_svc(airport *, struct svc_req *);
 extern int airport_prog_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
-#define callPlaces 1
-extern  airportList * callplaces_1();
-extern  airportList * callplaces_1_svc();
+#define callAirport 1
+extern  airportList * callairport_1();
+extern  airportList * callairport_1_svc();
 extern int airport_prog_1_freeresult ();
 #endif /* K&R C */
 
 /* the xdr functions */
 
 #if defined(__STDC__) || defined(__cplusplus)
-extern  bool_t xdr_place (XDR *, place*);
 extern  bool_t xdr_airport (XDR *, airport*);
 extern  bool_t xdr_airportList (XDR *, airportList*);
-extern  bool_t xdr_TrieNode (XDR *, TrieNode*);
+extern  bool_t xdr_KDNode (XDR *, KDNode*);
 extern  bool_t xdr_coordinate (XDR *, coordinate*);
 
 #else /* K&R C */
-extern bool_t xdr_place ();
 extern bool_t xdr_airport ();
 extern bool_t xdr_airportList ();
-extern bool_t xdr_TrieNode ();
+extern bool_t xdr_KDNode ();
 extern bool_t xdr_coordinate ();
 
 #endif /* K&R C */
@@ -89,4 +79,4 @@ extern bool_t xdr_coordinate ();
 }
 #endif
 
-#endif /* !_CLIENTPLACES_H_RPCGEN */
+#endif /* !_PLACESAIRPORT_H_RPCGEN */

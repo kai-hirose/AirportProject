@@ -2,8 +2,8 @@
 
 CC = $(CXX)
 
-CLIENT = ClientPlaces_client
-SERVER = ClientPlaces_server
+CLIENT = ClientPlaces_client PlaceAirport_client
+SERVER = ClientPlaces_server PlacesAirport_server
 
 SOURCES_CLNT.c = 
 SOURCES_CLNT.h = 

@@ -3,25 +3,7 @@
  * It was generated using rpcgen.
  */
 
-#include "ClientPlaces.h"
-
-bool_t
-xdr_place (XDR *xdrs, place *objp)
-{
-	register int32_t *buf;
-
-	int i;
-	 if (!xdr_pointer (xdrs, (char **)&objp->name, sizeof (char), (xdrproc_t) xdr_char))
-		 return FALSE;
-	 if (!xdr_vector (xdrs, (char *)objp->state, 2,
-		sizeof (char), (xdrproc_t) xdr_char))
-		 return FALSE;
-	 if (!xdr_double (xdrs, &objp->lat))
-		 return FALSE;
-	 if (!xdr_double (xdrs, &objp->lon))
-		 return FALSE;
-	return TRUE;
-}
+#include "PlacesAirport.h"
 
 bool_t
 xdr_airport (XDR *xdrs, airport *objp)
@@ -56,13 +38,13 @@ xdr_airportList (XDR *xdrs, airportList *objp)
 }
 
 bool_t
-xdr_TrieNode (XDR *xdrs, TrieNode *objp)
+xdr_KDNode (XDR *xdrs, KDNode *objp)
 {
 	register int32_t *buf;
 
-	 if (!xdr_pointer (xdrs, (char **)&objp->TN, sizeof (TrieNode), (xdrproc_t) xdr_TrieNode))
+	 if (!xdr_pointer (xdrs, (char **)&objp->right, sizeof (KDNode), (xdrproc_t) xdr_KDNode))
 		 return FALSE;
-	 if (!xdr_int (xdrs, &objp->index))
+	 if (!xdr_pointer (xdrs, (char **)&objp->left, sizeof (KDNode), (xdrproc_t) xdr_KDNode))
 		 return FALSE;
 	 if (!xdr_double (xdrs, &objp->lat))
 		 return FALSE;

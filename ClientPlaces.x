@@ -1,3 +1,10 @@
+struct place {
+	char* name;
+	char state[2];
+	double lat;
+	double lon;
+};
+
 struct airport{
     int code;
     char* name;
@@ -11,13 +18,6 @@ struct airportList{
     airport array[5];
 };
 
-struct KDNode{
-    KDNode* right;
-    KDNode* left;
-    double lat;
-    double lon;
-};
-
 struct TrieNode{
     TrieNode* TN;
     int index;
@@ -25,8 +25,13 @@ struct TrieNode{
     double lon;
 };
 
+struct coordinate {
+	double lat;
+	double lon;
+};
+
 program AIRPORT_PROG{
     version AIRPORT_VERS{
         airportList callPlaces(char*) = 1;
     }=1;
-}=0x32320776;
+}=0x3232077A;
