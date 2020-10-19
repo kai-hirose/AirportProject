@@ -30,8 +30,8 @@ struct coordinate {
 	double lon;
 };
 
-program AIRPORT_PROG{
-    version AIRPORT_VERS{
+program PLACES_PROG{
+    version PLACES_VERS{
         airportList callPlaces(char*) = 1;
     }=1;
 }=0x3232077A;
