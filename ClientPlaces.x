@@ -1,4 +1,4 @@
-struct place {
+struct place{
 	char* name;
 	char state[2];
 	double lat;
