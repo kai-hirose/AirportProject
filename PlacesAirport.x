@@ -1,3 +1,4 @@
+typedef struct KDNode KDNode
 struct airportPA{
     int code;
     char* name;

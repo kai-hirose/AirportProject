@@ -1,3 +1,4 @@
+typedef struct TrieNode TrieNode
 struct place{
 	char* name;
 	char state[2];
