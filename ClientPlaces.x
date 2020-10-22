@@ -5,7 +5,7 @@ struct place{
 	double lon;
 };
 
-struct airport{
+struct airportCP{
     int code;
     char* name;
     double lat;
@@ -13,25 +13,21 @@ struct airport{
     double distance;
 };
 
-struct airportList{
-    int error;
-    airport array[5];
-};
+struct returnCP
+{
+	int error;
+	airportCP array[5];
+}
 
 struct TrieNode{
-    TrieNode* TN;
-    int index;
-    double lat;
-    double lon;
-};
-
-struct coordinate {
+	TrieNode* array[26] = {NULL};
+	int index;
 	double lat;
 	double lon;
 };
 
 program PLACES_PROG{
-    version PLACES_VERS{
-        airportList callPlaces(char*) = 1;
-    }=1;
+	version PLACES_VERS{
+		airportList callPlaces(char*) = 1;
+	}=1;
 }=0x3232077A;

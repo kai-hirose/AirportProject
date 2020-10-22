@@ -1,4 +1,4 @@
-struct airport{
+struct airportPA{
     int code;
     char* name;
     double lat;
@@ -6,21 +6,16 @@ struct airport{
     double distance;
 };
 
-struct airportList{
-    int error;
-    airport array[5];
-};
+struct returnPA {
+	int error;
+	airportPA array[5];
+}
 
 struct KDNode{
     KDNode* right;
     KDNode* left;
     double lat;
     double lon;
-};
-
-struct coordinate {
-	double lat;
-	double lon;
 };
 
 program AIRPORT_PROG{
