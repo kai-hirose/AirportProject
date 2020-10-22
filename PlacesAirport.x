@@ -1,4 +1,3 @@
-typedef struct KDNode KDNode
 struct airportPA{
     int code;
     char* name;
@@ -7,20 +6,26 @@ struct airportPA{
     double distance;
 };
 
-struct returnPA {
+struct returnPA{
 	int error;
 	airportPA array[5];
-}
+};
 
-struct KDNode{
-    KDNode* right;
-    KDNode* left;
+struct coordinatePA{
+    double lat;
+    double lon;
+};
+
+typedef struct kDNode *kDNodePtr;
+struct kDNode{
+    kDNodePtr right;
+    kDNodePtr left;
     double lat;
     double lon;
 };
 
 program AIRPORT_PROG{
     version AIRPORT_VERS{
-        airportList callAirport(airport) = 1;
+        returnPA callAirport(coordinatePA) = 1;
     }=1;
 }=0x3232077B;

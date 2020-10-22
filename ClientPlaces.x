@@ -1,4 +1,3 @@
-typedef struct TrieNode TrieNode
 struct place{
 	char* name;
 	char state[2];
@@ -14,14 +13,19 @@ struct airportCP{
     double distance;
 };
 
-struct returnCP
-{
+struct returnCP{
 	int error;
 	airportCP array[5];
-}
+};
 
-struct TrieNode{
-	TrieNode* array[26] = {NULL};
+struct coordinateCP{
+    double lat;
+    double lon;
+};
+
+typedef struct tNode *tNodePtr;
+struct tNode{
+	tNodePtr array[26];
 	int index;
 	double lat;
 	double lon;
@@ -29,6 +33,6 @@ struct TrieNode{
 
 program PLACES_PROG{
 	version PLACES_VERS{
-		airportList callPlaces(char*) = 1;
+		returnCP callPlaces(char*) = 1;
 	}=1;
 }=0x3232077A;
