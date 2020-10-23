@@ -15,7 +15,7 @@ extern "C" {
 
 
 struct airportPA {
-	int code;
+	char *code;
 	char *name;
 	double lat;
 	double lon;
@@ -29,11 +29,11 @@ struct returnPA {
 };
 typedef struct returnPA returnPA;
 
-struct coordinatePA {
+struct coordinate {
 	double lat;
 	double lon;
 };
-typedef struct coordinatePA coordinatePA;
+typedef struct coordinate coordinate;
 
 typedef struct kDNode *kDNodePtr;
 
@@ -50,8 +50,8 @@ typedef struct kDNode kDNode;
 
 #if defined(__STDC__) || defined(__cplusplus)
 #define callAirport 1
-extern  returnPA * callairport_1(coordinatePA *, CLIENT *);
-extern  returnPA * callairport_1_svc(coordinatePA *, struct svc_req *);
+extern  returnPA * callairport_1(coordinate *, CLIENT *);
+extern  returnPA * callairport_1_svc(coordinate *, struct svc_req *);
 extern int airport_prog_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
@@ -66,14 +66,14 @@ extern int airport_prog_1_freeresult ();
 #if defined(__STDC__) || defined(__cplusplus)
 extern  bool_t xdr_airportPA (XDR *, airportPA*);
 extern  bool_t xdr_returnPA (XDR *, returnPA*);
-extern  bool_t xdr_coordinatePA (XDR *, coordinatePA*);
+extern  bool_t xdr_coordinate (XDR *, coordinate*);
 extern  bool_t xdr_kDNodePtr (XDR *, kDNodePtr*);
 extern  bool_t xdr_kDNode (XDR *, kDNode*);
 
 #else /* K&R C */
 extern bool_t xdr_airportPA ();
 extern bool_t xdr_returnPA ();
-extern bool_t xdr_coordinatePA ();
+extern bool_t xdr_coordinate ();
 extern bool_t xdr_kDNodePtr ();
 extern bool_t xdr_kDNode ();
 

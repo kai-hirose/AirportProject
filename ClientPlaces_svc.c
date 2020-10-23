@@ -20,7 +20,7 @@ static void
 places_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
-		char callplaces_1_arg;
+		char *callplaces_1_arg;
 	} argument;
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
@@ -32,7 +32,7 @@ places_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		return;
 
 	case callPlaces:
-		_xdr_argument = (xdrproc_t) xdr_char;
+		_xdr_argument = (xdrproc_t) xdr_wrapstring;
 		_xdr_result = (xdrproc_t) xdr_returnCP;
 		local = (char *(*)(char *, struct svc_req *)) callplaces_1_svc;
 		break;

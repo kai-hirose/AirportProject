@@ -7,13 +7,11 @@
 #include "PlacesAirport.h"
 
 returnPA *
-callairport_1_svc(coordinatePA *argp, struct svc_req *rqstp)
+callairport_1_svc(coordinate *argp, struct svc_req *rqstp)
 {
 	static returnPA  result;
 
-	/*
-	 * insert server code here
-	 */
+	result.error = 3;
 
 	return &result;
 }

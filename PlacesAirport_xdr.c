@@ -10,9 +10,9 @@ xdr_airportPA (XDR *xdrs, airportPA *objp)
 {
 	register int32_t *buf;
 
-	 if (!xdr_int (xdrs, &objp->code))
+	 if (!xdr_string (xdrs, &objp->code, 5))
 		 return FALSE;
-	 if (!xdr_pointer (xdrs, (char **)&objp->name, sizeof (char), (xdrproc_t) xdr_char))
+	 if (!xdr_string (xdrs, &objp->name, 256))
 		 return FALSE;
 	 if (!xdr_double (xdrs, &objp->lat))
 		 return FALSE;
@@ -38,7 +38,7 @@ xdr_returnPA (XDR *xdrs, returnPA *objp)
 }
 
 bool_t
-xdr_coordinatePA (XDR *xdrs, coordinatePA *objp)
+xdr_coordinate (XDR *xdrs, coordinate *objp)
 {
 	register int32_t *buf;
 

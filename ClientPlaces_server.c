@@ -7,7 +7,7 @@
 #include "ClientPlaces.h"
 
 returnCP *
-callplaces_1_svc(char *argp, struct svc_req *rqstp)
+callplaces_1_svc(char **argp, struct svc_req *rqstp)
 {
 	static returnCP  result;
 

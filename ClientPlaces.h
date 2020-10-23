@@ -16,14 +16,14 @@ extern "C" {
 
 struct place {
 	char *name;
-	char state[2];
+	char *state;
 	double lat;
 	double lon;
 };
 typedef struct place place;
 
 struct airportCP {
-	int code;
+	char *code;
 	char *name;
 	double lat;
 	double lon;
@@ -36,12 +36,6 @@ struct returnCP {
 	airportCP array[5];
 };
 typedef struct returnCP returnCP;
-
-struct coordinateCP {
-	double lat;
-	double lon;
-};
-typedef struct coordinateCP coordinateCP;
 
 typedef struct tNode *tNodePtr;
 
@@ -58,8 +52,8 @@ typedef struct tNode tNode;
 
 #if defined(__STDC__) || defined(__cplusplus)
 #define callPlaces 1
-extern  returnCP * callplaces_1(char *, CLIENT *);
-extern  returnCP * callplaces_1_svc(char *, struct svc_req *);
+extern  returnCP * callplaces_1(char **, CLIENT *);
+extern  returnCP * callplaces_1_svc(char **, struct svc_req *);
 extern int places_prog_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
@@ -75,7 +69,6 @@ extern int places_prog_1_freeresult ();
 extern  bool_t xdr_place (XDR *, place*);
 extern  bool_t xdr_airportCP (XDR *, airportCP*);
 extern  bool_t xdr_returnCP (XDR *, returnCP*);
-extern  bool_t xdr_coordinateCP (XDR *, coordinateCP*);
 extern  bool_t xdr_tNodePtr (XDR *, tNodePtr*);
 extern  bool_t xdr_tNode (XDR *, tNode*);
 
@@ -83,7 +76,6 @@ extern  bool_t xdr_tNode (XDR *, tNode*);
 extern bool_t xdr_place ();
 extern bool_t xdr_airportCP ();
 extern bool_t xdr_returnCP ();
-extern bool_t xdr_coordinateCP ();
 extern bool_t xdr_tNodePtr ();
 extern bool_t xdr_tNode ();
 

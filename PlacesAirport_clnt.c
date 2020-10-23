@@ -10,13 +10,13 @@
 static struct timeval TIMEOUT = { 25, 0 };
 
 returnPA *
-callairport_1(coordinatePA *argp, CLIENT *clnt)
+callairport_1(coordinate *argp, CLIENT *clnt)
 {
 	static returnPA clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
 	if (clnt_call (clnt, callAirport,
-		(xdrproc_t) xdr_coordinatePA, (caddr_t) argp,
+		(xdrproc_t) xdr_coordinate, (caddr_t) argp,
 		(xdrproc_t) xdr_returnPA, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
 		return (NULL);

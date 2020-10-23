@@ -1,13 +1,13 @@
 struct place{
-	char* name;
-	char state[2];
+	string name<256>;
+	string state<2>;
 	double lat;
 	double lon;
 };
 
 struct airportCP{
-    int code;
-    char* name;
+    string code<5>;
+    string name<256>;
     double lat;
     double lon;
     double distance;
@@ -16,11 +16,6 @@ struct airportCP{
 struct returnCP{
 	int error;
 	airportCP array[5];
-};
-
-struct coordinateCP{
-    double lat;
-    double lon;
 };
 
 typedef struct tNode *tNodePtr;
@@ -33,6 +28,6 @@ struct tNode{
 
 program PLACES_PROG{
 	version PLACES_VERS{
-		returnCP callPlaces(char*) = 1;
+		returnCP callPlaces(string) = 1;
 	}=1;
 }=0x3232077A;

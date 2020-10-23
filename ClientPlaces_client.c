@@ -12,7 +12,7 @@ places_prog_1(char *host)
 {
 	CLIENT *clnt;
 	returnCP  *result_1;
-	char  callplaces_1_arg;
+	char*  callplaces_1_arg = host;
 
 #ifndef	DEBUG
 	clnt = clnt_create (host, PLACES_PROG, PLACES_VERS, "udp");
@@ -25,6 +25,8 @@ places_prog_1(char *host)
 	result_1 = callplaces_1(&callplaces_1_arg, clnt);
 	if (result_1 == (returnCP *) NULL) {
 		clnt_perror (clnt, "call failed");
+	}else{
+		printf("%i", result_1 -> error);
 	}
 #ifndef	DEBUG
 	clnt_destroy (clnt);

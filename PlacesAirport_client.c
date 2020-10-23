@@ -12,7 +12,7 @@ airport_prog_1(char *host)
 {
 	CLIENT *clnt;
 	returnPA  *result_1;
-	coordinatePA  callairport_1_arg;
+	coordinate  callairport_1_arg;
 
 #ifndef	DEBUG
 	clnt = clnt_create (host, AIRPORT_PROG, AIRPORT_VERS, "udp");

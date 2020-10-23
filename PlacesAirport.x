@@ -1,6 +1,6 @@
 struct airportPA{
-    int code;
-    char* name;
+    string code<5>;
+    string name<256>;
     double lat;
     double lon;
     double distance;
@@ -11,7 +11,7 @@ struct returnPA{
 	airportPA array[5];
 };
 
-struct coordinatePA{
+struct coordinate{
     double lat;
     double lon;
 };
@@ -26,6 +26,6 @@ struct kDNode{
 
 program AIRPORT_PROG{
     version AIRPORT_VERS{
-        returnPA callAirport(coordinatePA) = 1;
+        returnPA callAirport(coordinate) = 1;
     }=1;
 }=0x3232077B;

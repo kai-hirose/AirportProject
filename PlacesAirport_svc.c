@@ -20,7 +20,7 @@ static void
 airport_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
-		coordinatePA callairport_1_arg;
+		coordinate callairport_1_arg;
 	} argument;
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
@@ -32,7 +32,7 @@ airport_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		return;
 
 	case callAirport:
-		_xdr_argument = (xdrproc_t) xdr_coordinatePA;
+		_xdr_argument = (xdrproc_t) xdr_coordinate;
 		_xdr_result = (xdrproc_t) xdr_returnPA;
 		local = (char *(*)(char *, struct svc_req *)) callairport_1_svc;
 		break;

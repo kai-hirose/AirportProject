@@ -10,11 +10,9 @@ xdr_place (XDR *xdrs, place *objp)
 {
 	register int32_t *buf;
 
-	int i;
-	 if (!xdr_pointer (xdrs, (char **)&objp->name, sizeof (char), (xdrproc_t) xdr_char))
+	 if (!xdr_string (xdrs, &objp->name, 256))
 		 return FALSE;
-	 if (!xdr_vector (xdrs, (char *)objp->state, 2,
-		sizeof (char), (xdrproc_t) xdr_char))
+	 if (!xdr_string (xdrs, &objp->state, 2))
 		 return FALSE;
 	 if (!xdr_double (xdrs, &objp->lat))
 		 return FALSE;
@@ -28,9 +26,9 @@ xdr_airportCP (XDR *xdrs, airportCP *objp)
 {
 	register int32_t *buf;
 
-	 if (!xdr_int (xdrs, &objp->code))
+	 if (!xdr_string (xdrs, &objp->code, 5))
 		 return FALSE;
-	 if (!xdr_pointer (xdrs, (char **)&objp->name, sizeof (char), (xdrproc_t) xdr_char))
+	 if (!xdr_string (xdrs, &objp->name, 256))
 		 return FALSE;
 	 if (!xdr_double (xdrs, &objp->lat))
 		 return FALSE;
@@ -51,18 +49,6 @@ xdr_returnCP (XDR *xdrs, returnCP *objp)
 		 return FALSE;
 	 if (!xdr_vector (xdrs, (char *)objp->array, 5,
 		sizeof (airportCP), (xdrproc_t) xdr_airportCP))
-		 return FALSE;
-	return TRUE;
-}
-
-bool_t
-xdr_coordinateCP (XDR *xdrs, coordinateCP *objp)
-{
-	register int32_t *buf;
-
-	 if (!xdr_double (xdrs, &objp->lat))
-		 return FALSE;
-	 if (!xdr_double (xdrs, &objp->lon))
 		 return FALSE;
 	return TRUE;
 }
