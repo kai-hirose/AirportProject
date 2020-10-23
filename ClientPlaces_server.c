@@ -8,10 +8,10 @@
 #include "PlacesAirport.h"
 
 returnCP *
-callplaces_1_svc(char *argp, struct svc_req *rqstp)
+callplaces_1_svc(char **argp, struct svc_req *rqstp)
 {
 	/* Prepare arguments and return types*/
-	static returnCP* result_CP;
+	static returnCP result_CP;
 	static returnPA* result_PA;
 	CLIENT *clnt;
 	coordinate callairport_1_arg;
@@ -27,11 +27,11 @@ callplaces_1_svc(char *argp, struct svc_req *rqstp)
 	result_PA = callairport_1(&callairport_1_arg, clnt);
 	if (result_PA == (returnPA *) NULL) {
 		clnt_perror (clnt, "call failed");
-		result_CP->error = result_PA->error;
-		return result_CP;
+		result_CP.error = result_PA->error;
+		return &result_CP;
 	}else{
-		result_CP->error = 0;
-		return result_CP;
+		result_CP.error = 0;
+		return &result_CP;
 	}
 #ifndef	DEBUG
 	clnt_destroy (clnt);

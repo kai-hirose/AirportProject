@@ -12,7 +12,7 @@ places_prog_1(char *host)
 {
 	CLIENT *clnt;
 	returnCP  *result_1;
-	char*  callplaces_1_arg;
+	char*  callplaces_1_arg = host;
 
 #ifndef	DEBUG
 	clnt = clnt_create (host, PLACES_PROG, PLACES_VERS, "udp");
