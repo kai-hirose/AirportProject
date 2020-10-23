@@ -5,15 +5,35 @@
  */
 
 #include "ClientPlaces.h"
+#include "PlacesAirport.h"
 
 returnCP *
-callplaces_1_svc(char **argp, struct svc_req *rqstp)
+callplaces_1_svc(char *argp, struct svc_req *rqstp)
 {
-	static returnCP  result;
+	/* Prepare arguments and return types*/
+	static returnCP* result_CP;
+	static returnPA* result_PA;
+	CLIENT *clnt;
+	coordinate callairport_1_arg;
 
-	/*
-	 * insert server code here
-	 */
-
-	return &result;
+#ifndef	DEBUG
+	clnt = clnt_create ("localhost", AIRPORT_PROG, AIRPORT_VERS, "udp");
+	if (clnt == NULL) {
+		clnt_pcreateerror ("localhost");
+		exit (1);
+	}
+#endif	/* DEBUG */
+	/*Convert the returnPA from callairport to returnCP and coordinateCP to coordinatePA*/
+	result_PA = callairport_1(&callairport_1_arg, clnt);
+	if (result_PA == (returnPA *) NULL) {
+		clnt_perror (clnt, "call failed");
+		result_CP->error = result_PA->error;
+		return result_CP;
+	}else{
+		result_CP->error = 0;
+		return result_CP;
+	}
+#ifndef	DEBUG
+	clnt_destroy (clnt);
+#endif	 /* DEBUG */
 }

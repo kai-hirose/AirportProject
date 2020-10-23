@@ -68,9 +68,7 @@ xdr_kDNode (XDR *xdrs, kDNode *objp)
 		 return FALSE;
 	 if (!xdr_kDNodePtr (xdrs, &objp->left))
 		 return FALSE;
-	 if (!xdr_double (xdrs, &objp->lat))
-		 return FALSE;
-	 if (!xdr_double (xdrs, &objp->lon))
+	 if (!xdr_airportPA (xdrs, &objp->airport))
 		 return FALSE;
 	return TRUE;
 }

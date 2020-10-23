@@ -40,8 +40,7 @@ typedef struct kDNode *kDNodePtr;
 struct kDNode {
 	kDNodePtr right;
 	kDNodePtr left;
-	double lat;
-	double lon;
+	airportPA airport;
 };
 typedef struct kDNode kDNode;
 
