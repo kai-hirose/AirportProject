@@ -4,25 +4,25 @@
  * as a guideline for developing your own functions.
  */
 
-#include "PlacesAirport.h"
+#include "PlacesAirports.h"
 
 
 void
-placesairport_prog_1(char *host)
+places_airport_prog_1(char *host)
 {
 	CLIENT *clnt;
 	returnPA  *result_1;
-	coordinate  callairport_1_arg;
+	coordinate  callairports_1_arg;
 
 #ifndef	DEBUG
-	clnt = clnt_create (host, PLACESAIRPORT_PROG, PLACESAIRPORT_VERS, "udp");
+	clnt = clnt_create (host, PLACES_AIRPORT_PROG, PLACES_AIRPORT_VERS, "udp");
 	if (clnt == NULL) {
 		clnt_pcreateerror (host);
 		exit (1);
 	}
 #endif	/* DEBUG */
 
-	result_1 = callairport_1(&callairport_1_arg, clnt);
+	result_1 = callairports_1(&callairports_1_arg, clnt);
 	if (result_1 == (returnPA *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
@@ -42,6 +42,6 @@ main (int argc, char *argv[])
 		exit (1);
 	}
 	host = argv[1];
-	placesairport_prog_1 (host);
+	places_airport_prog_1 (host);
 exit (0);
 }

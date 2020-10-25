@@ -2,8 +2,8 @@
 CLIENTCP = ClientPlaces_client
 SERVERCP = ClientPlaces_server
 
-CLIENTPA = PlacesAirport_client
-SERVERPA = PlacesAirport_server
+CLIENTPA = PlacesAirports_client
+SERVERPA = PlacesAirports_server
 
 SOURCESCP_CLNT.c = 
 SOURCESCP_CLNT.h = 
@@ -15,20 +15,20 @@ SOURCESPA_CLNT.c =
 SOURCESPA_CLNT.h =
 SOURCESPA_CLNT.c =
 SOURCESPA_SVC.h =
-SOURCESPA.x = PlacesAirport.x
+SOURCESPA.x = PlacesAirports.x
 
 #ClientPlaces files
-TARGETSCP_SVC.c = ClientPlaces_svc.c ClientPlaces_server.c ClientPlaces_xdr.c PlacesAirport_clnt.c PlacesAirport_xdr.c
+TARGETSCP_SVC.c = ClientPlaces_svc.c ClientPlaces_server.c ClientPlaces_xdr.c PlacesAirports_clnt.c PlacesAirports_xdr.c
 TARGETSCP_CLNT.c = ClientPlaces_clnt.c ClientPlaces_client.c ClientPlaces_xdr.c 
-TARGETSCP = ClientPlaces.h ClientPlaces_xdr.c ClientPlaces_clnt.c ClientPlaces_svc.c ClientPlaces_client.c ClientPlaces_server.c PlacesAirport.h PlacesAirport_xdr.c PlacesAirport_clnt.c
+TARGETSCP = ClientPlaces.h ClientPlaces_xdr.c ClientPlaces_clnt.c ClientPlaces_svc.c ClientPlaces_client.c ClientPlaces_server.c PlacesAirports.h PlacesAirports_xdr.c PlacesAirports_clnt.c
 
-#PlacesAirport files
-TARGETSPA_SVC.c = PlacesAirport_svc.c PlacesAirport_server.c PlacesAirport_xdr.c
-TARGETSPA_CLNT.c = PlacesAirport_clnt.c PlacesAirport_client.c PlacesAirport_xdr.c
-TARGETSPA = PlacesAirport.h PlacesAirport_xdr.c PlacesAirport_clnt.c PlacesAirport_svc.c PlacesAirport_client.c PlacesAirport_server.c
+#PlacesAirports files
+TARGETSPA_SVC.c = PlacesAirports_svc.c PlacesAirports_server.c PlacesAirports_xdr.c
+TARGETSPA_CLNT.c = PlacesAirports_clnt.c PlacesAirports_client.c PlacesAirports_xdr.c
+TARGETSPA = PlacesAirports.h PlacesAirports_xdr.c PlacesAirports_clnt.c PlacesAirports_svc.c PlacesAirports_client.c PlacesAirports_server.c
 
 
-#ClientPlaces and PlacesAirport objects.
+#ClientPlaces and PlacesAirports objects.
 OBJECTSCP_CLNT = $(SOURCESCP_CLNT.c:%.c=%.o)  $(TARGETSCP_CLNT.c:%.c=%.o)
 OBJECTSCP_SVC = $(SOURCESCP_SVC.c:%.c=%.o) $(TARGETSCP_SVC.c:%.c=%.o)
 

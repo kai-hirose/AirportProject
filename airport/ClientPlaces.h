@@ -13,6 +13,9 @@
 extern "C" {
 #endif
 
+#define NAMETYPECPSIZE 256
+#define STATETYPECPSIZE 2
+#define CODETYPECPSIZE 3
 
 typedef char *nametypecp;
 
@@ -63,20 +66,20 @@ struct tNode {
 };
 typedef struct tNode tNode;
 
-#define CLIENTPLACES_PROG 0x32320779
-#define CLIENTPLACES_VERS 1
+#define CLIENT_PLACES_PROG 0x61320779
+#define CLIENT_PLACES_VERS 1
 
 #if defined(__STDC__) || defined(__cplusplus)
-#define callPlaces 1
+#define CALLPLACES 1
 extern  returnCP * callplaces_1(nametypecp *, CLIENT *);
 extern  returnCP * callplaces_1_svc(nametypecp *, struct svc_req *);
-extern int clientplaces_prog_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
+extern int client_places_prog_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
-#define callPlaces 1
+#define CALLPLACES 1
 extern  returnCP * callplaces_1();
 extern  returnCP * callplaces_1_svc();
-extern int clientplaces_prog_1_freeresult ();
+extern int client_places_prog_1_freeresult ();
 #endif /* K&R C */
 
 /* the xdr functions */

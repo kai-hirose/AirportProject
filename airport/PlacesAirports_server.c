@@ -4,10 +4,10 @@
  * as a guideline for developing your own functions.
  */
 
-#include "PlacesAirport.h"
+#include "PlacesAirports.h"
 
 returnPA *
-callairport_1_svc(coordinate *argp, struct svc_req *rqstp)
+callairports_1_svc(coordinate *argp, struct svc_req *rqstp)
 {
 	static returnPA  result;
 

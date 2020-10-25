@@ -10,11 +10,9 @@ returnCP *
 callplaces_1_svc(nametypecp *argp, struct svc_req *rqstp)
 {
 	static returnCP  result;
-
 	airportNodeCP test;
 	test.airport.code = "tes\n\0";
 	result.returnCP_u.list = &test;
-	printf("%s", result.returnCP_u.list->airport.code);
 	result.err = 0;
 	return &result;
 }

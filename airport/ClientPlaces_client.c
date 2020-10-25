@@ -8,27 +8,27 @@
 
 
 void
-clientplaces_prog_1(char *host)
+client_places_prog_1(char *host)
 {
 	CLIENT *clnt;
 	returnCP  *result_1;
-	nametypecp  callplaces_1_arg = "test\0";
+	nametypecp  callplaces_1_arg = host;
 
 #ifndef	DEBUG
-	clnt = clnt_create (host, CLIENTPLACES_PROG, CLIENTPLACES_VERS, "udp");
+	clnt = clnt_create (host, CLIENT_PLACES_PROG, CLIENT_PLACES_VERS, "udp");
 	if (clnt == NULL) {
 		clnt_pcreateerror (host);
 		exit (1);
-	}else{
-		if(result_1->err==0){
-			printf("%s", result_1->returnCP_u.list->airport.code);	
-		}
 	}
 #endif	/* DEBUG */
 
 	result_1 = callplaces_1(&callplaces_1_arg, clnt);
 	if (result_1 == (returnCP *) NULL) {
 		clnt_perror (clnt, "call failed");
+	}else{
+		if(result_1->err==0){
+			printf("%s\n", result_1->returnCP_u.list->airport.code);
+		}
 	}
 #ifndef	DEBUG
 	clnt_destroy (clnt);
@@ -46,6 +46,6 @@ main (int argc, char *argv[])
 		exit (1);
 	}
 	host = argv[1];
-	clientplaces_prog_1 (host);
+	client_places_prog_1 (host);
 exit (0);
 }

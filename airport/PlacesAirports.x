@@ -1,7 +1,9 @@
-typedef string nametypepa<256>;
-typedef string codetypepa<5>;
+const NAMETYPEPASIZE = 256;
+const CODETYPEPASIZE = 3;
+typedef string nametypepa<NAMETYPEPASIZE>;
+typedef string codetypepa<CODETYPEPASIZE>;
 typedef struct airportNodePA* airportListPA;
-typedef struct kDNode *kDNodePtr;
+typedef struct kDNode* kDNodePtr;
 
 struct airportPA{
     codetypepa code;
@@ -34,8 +36,8 @@ struct kDNode{
     airportPA airport;
 };
 
-program PLACESAIRPORT_PROG{
-    version PLACESAIRPORT_VERS{
-        returnPA callAirport(coordinate) = 1;
-    }=1;
-}=0x32320780;
+program PLACES_AIRPORT_PROG{
+    version PLACES_AIRPORT_VERS{
+        returnPA CALLAIRPORTS(coordinate) = 1;
+    } = 1;
+} = 0x51320780;

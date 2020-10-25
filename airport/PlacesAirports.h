@@ -3,8 +3,8 @@
  * It was generated using rpcgen.
  */
 
-#ifndef _PLACESAIRPORT_H_RPCGEN
-#define _PLACESAIRPORT_H_RPCGEN
+#ifndef _PLACESAIRPORTS_H_RPCGEN
+#define _PLACESAIRPORTS_H_RPCGEN
 
 #include <rpc/rpc.h>
 
@@ -13,6 +13,8 @@
 extern "C" {
 #endif
 
+#define NAMETYPEPASIZE 256
+#define CODETYPEPASIZE 3
 
 typedef char *nametypepa;
 
@@ -58,20 +60,20 @@ struct kDNode {
 };
 typedef struct kDNode kDNode;
 
-#define PLACESAIRPORT_PROG 0x32320780
-#define PLACESAIRPORT_VERS 1
+#define PLACES_AIRPORT_PROG 0x51320780
+#define PLACES_AIRPORT_VERS 1
 
 #if defined(__STDC__) || defined(__cplusplus)
-#define callAirport 1
-extern  returnPA * callairport_1(coordinate *, CLIENT *);
-extern  returnPA * callairport_1_svc(coordinate *, struct svc_req *);
-extern int placesairport_prog_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
+#define CALLAIRPORTS 1
+extern  returnPA * callairports_1(coordinate *, CLIENT *);
+extern  returnPA * callairports_1_svc(coordinate *, struct svc_req *);
+extern int places_airport_prog_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
-#define callAirport 1
-extern  returnPA * callairport_1();
-extern  returnPA * callairport_1_svc();
-extern int placesairport_prog_1_freeresult ();
+#define CALLAIRPORTS 1
+extern  returnPA * callairports_1();
+extern  returnPA * callairports_1_svc();
+extern int places_airport_prog_1_freeresult ();
 #endif /* K&R C */
 
 /* the xdr functions */
@@ -104,4 +106,4 @@ extern bool_t xdr_kDNode ();
 }
 #endif
 
-#endif /* !_PLACESAIRPORT_H_RPCGEN */
+#endif /* !_PLACESAIRPORTS_H_RPCGEN */

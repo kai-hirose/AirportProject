@@ -3,18 +3,18 @@
 
 # Parameters
 
-CLIENT = PlacesAirport_client
-SERVER = PlacesAirport_server
+CLIENT = PlacesAirports_client
+SERVER = PlacesAirports_server
 
 SOURCES_CLNT.c = 
 SOURCES_CLNT.h = 
 SOURCES_SVC.c = 
 SOURCES_SVC.h = 
-SOURCES.x = PlacesAirport.x
+SOURCES.x = PlacesAirports.x
 
-TARGETS_SVC.c = PlacesAirport_svc.c PlacesAirport_server.c PlacesAirport_xdr.c 
-TARGETS_CLNT.c = PlacesAirport_clnt.c PlacesAirport_client.c PlacesAirport_xdr.c 
-TARGETS = PlacesAirport.h PlacesAirport_xdr.c PlacesAirport_clnt.c PlacesAirport_svc.c PlacesAirport_client.c PlacesAirport_server.c
+TARGETS_SVC.c = PlacesAirports_svc.c PlacesAirports_server.c PlacesAirports_xdr.c 
+TARGETS_CLNT.c = PlacesAirports_clnt.c PlacesAirports_client.c PlacesAirports_xdr.c 
+TARGETS = PlacesAirports.h PlacesAirports_xdr.c PlacesAirports_clnt.c PlacesAirports_svc.c PlacesAirports_client.c PlacesAirports_server.c
 
 OBJECTS_CLNT = $(SOURCES_CLNT.c:%.c=%.o) $(TARGETS_CLNT.c:%.c=%.o)
 OBJECTS_SVC = $(SOURCES_SVC.c:%.c=%.o) $(TARGETS_SVC.c:%.c=%.o)

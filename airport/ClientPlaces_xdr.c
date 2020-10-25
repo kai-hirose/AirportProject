@@ -10,7 +10,7 @@ xdr_nametypecp (XDR *xdrs, nametypecp *objp)
 {
 	register int32_t *buf;
 
-	 if (!xdr_string (xdrs, objp, 256))
+	 if (!xdr_string (xdrs, objp, NAMETYPECPSIZE))
 		 return FALSE;
 	return TRUE;
 }
@@ -20,7 +20,7 @@ xdr_statetypecp (XDR *xdrs, statetypecp *objp)
 {
 	register int32_t *buf;
 
-	 if (!xdr_string (xdrs, objp, 2))
+	 if (!xdr_string (xdrs, objp, STATETYPECPSIZE))
 		 return FALSE;
 	return TRUE;
 }
@@ -30,7 +30,7 @@ xdr_codetypecp (XDR *xdrs, codetypecp *objp)
 {
 	register int32_t *buf;
 
-	 if (!xdr_string (xdrs, objp, 5))
+	 if (!xdr_string (xdrs, objp, CODETYPECPSIZE))
 		 return FALSE;
 	return TRUE;
 }

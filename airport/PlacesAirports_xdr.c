@@ -3,14 +3,14 @@
  * It was generated using rpcgen.
  */
 
-#include "PlacesAirport.h"
+#include "PlacesAirports.h"
 
 bool_t
 xdr_nametypepa (XDR *xdrs, nametypepa *objp)
 {
 	register int32_t *buf;
 
-	 if (!xdr_string (xdrs, objp, 256))
+	 if (!xdr_string (xdrs, objp, NAMETYPEPASIZE))
 		 return FALSE;
 	return TRUE;
 }
@@ -20,7 +20,7 @@ xdr_codetypepa (XDR *xdrs, codetypepa *objp)
 {
 	register int32_t *buf;
 
-	 if (!xdr_string (xdrs, objp, 5))
+	 if (!xdr_string (xdrs, objp, CODETYPEPASIZE))
 		 return FALSE;
 	return TRUE;
 }

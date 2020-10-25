@@ -17,7 +17,7 @@
 #endif
 
 static void
-clientplaces_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
+client_places_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
 		nametypecp callplaces_1_arg;
@@ -31,7 +31,7 @@ clientplaces_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		(void) svc_sendreply (transp, (xdrproc_t) xdr_void, (char *)NULL);
 		return;
 
-	case callPlaces:
+	case CALLPLACES:
 		_xdr_argument = (xdrproc_t) xdr_nametypecp;
 		_xdr_result = (xdrproc_t) xdr_returnCP;
 		local = (char *(*)(char *, struct svc_req *)) callplaces_1_svc;
@@ -62,15 +62,15 @@ main (int argc, char **argv)
 {
 	register SVCXPRT *transp;
 
-	pmap_unset (CLIENTPLACES_PROG, CLIENTPLACES_VERS);
+	pmap_unset (CLIENT_PLACES_PROG, CLIENT_PLACES_VERS);
 
 	transp = svcudp_create(RPC_ANYSOCK);
 	if (transp == NULL) {
 		fprintf (stderr, "%s", "cannot create udp service.");
 		exit(1);
 	}
-	if (!svc_register(transp, CLIENTPLACES_PROG, CLIENTPLACES_VERS, clientplaces_prog_1, IPPROTO_UDP)) {
-		fprintf (stderr, "%s", "unable to register (CLIENTPLACES_PROG, CLIENTPLACES_VERS, udp).");
+	if (!svc_register(transp, CLIENT_PLACES_PROG, CLIENT_PLACES_VERS, client_places_prog_1, IPPROTO_UDP)) {
+		fprintf (stderr, "%s", "unable to register (CLIENT_PLACES_PROG, CLIENT_PLACES_VERS, udp).");
 		exit(1);
 	}
 
@@ -79,8 +79,8 @@ main (int argc, char **argv)
 		fprintf (stderr, "%s", "cannot create tcp service.");
 		exit(1);
 	}
-	if (!svc_register(transp, CLIENTPLACES_PROG, CLIENTPLACES_VERS, clientplaces_prog_1, IPPROTO_TCP)) {
-		fprintf (stderr, "%s", "unable to register (CLIENTPLACES_PROG, CLIENTPLACES_VERS, tcp).");
+	if (!svc_register(transp, CLIENT_PLACES_PROG, CLIENT_PLACES_VERS, client_places_prog_1, IPPROTO_TCP)) {
+		fprintf (stderr, "%s", "unable to register (CLIENT_PLACES_PROG, CLIENT_PLACES_VERS, tcp).");
 		exit(1);
 	}
 
