@@ -34,6 +34,11 @@ union returnCP switch (int err) {
         void;
 };
 
+struct coordinateCP{
+    double lat;
+    double lon;
+};
+
 struct tNode{
 	tNodePtr array;
 	int index;

@@ -25,7 +25,7 @@ union returnPA switch (int err) {
         void;
 };
 
-struct coordinate{
+struct coordinatePA{
     double lat;
     double lon;
 };
