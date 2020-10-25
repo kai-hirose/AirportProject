@@ -71,9 +71,7 @@ void KDTree::buildAirportTree(std::string filename)
 			ap.state = ap.name.substr(index+1, ap.name.length());
 			ap.name = ap.name.substr(0, index);
 			//cout << "city:" + city + " state:" + state << endl; 
-			std::cout << "Pre Insert" << std::endl;
 			insertKD(root, ap, 0);
-			std::cout << "Post Insert" << std::endl;
 		} else {
 			break;
 		}
@@ -84,9 +82,7 @@ void KDTree::buildAirportTree(std::string filename)
 void KDTree::insertKD(KDTree::kDNode *&r, KDTree::airportPA newAp, unsigned depth)
 {
 	if (r == NULL) {
-		std::cout << "Pre Node Creation" << std::endl;
 		r = new kDNode;
-		std::cout << "Post Node Creation" << std::endl;
 		r->ap.code = newAp.code;
 		r->ap.name = newAp.name;
 		r->ap.state = newAp.state;
