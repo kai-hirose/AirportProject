@@ -8,14 +8,14 @@
 
 
 void
-airport_prog_1(char *host)
+placesairport_prog_1(char *host)
 {
 	CLIENT *clnt;
 	returnPA  *result_1;
 	coordinate  callairport_1_arg;
 
 #ifndef	DEBUG
-	clnt = clnt_create (host, AIRPORT_PROG, AIRPORT_VERS, "udp");
+	clnt = clnt_create (host, PLACESAIRPORT_PROG, PLACESAIRPORT_VERS, "udp");
 	if (clnt == NULL) {
 		clnt_pcreateerror (host);
 		exit (1);
@@ -42,6 +42,6 @@ main (int argc, char *argv[])
 		exit (1);
 	}
 	host = argv[1];
-	airport_prog_1 (host);
+	placesairport_prog_1 (host);
 exit (0);
 }

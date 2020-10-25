@@ -3,7 +3,7 @@
  * It was generated using rpcgen.
  */
 
-#include "PlacesAirport.h"
+#include "ClientPlaces.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <rpc/pmap_clnt.h>
@@ -17,10 +17,10 @@
 #endif
 
 static void
-airport_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
+clientplaces_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
-		coordinate callairport_1_arg;
+		nametypecp callplaces_1_arg;
 	} argument;
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
@@ -31,10 +31,10 @@ airport_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		(void) svc_sendreply (transp, (xdrproc_t) xdr_void, (char *)NULL);
 		return;
 
-	case callAirport:
-		_xdr_argument = (xdrproc_t) xdr_coordinate;
-		_xdr_result = (xdrproc_t) xdr_returnPA;
-		local = (char *(*)(char *, struct svc_req *)) callairport_1_svc;
+	case callPlaces:
+		_xdr_argument = (xdrproc_t) xdr_nametypecp;
+		_xdr_result = (xdrproc_t) xdr_returnCP;
+		local = (char *(*)(char *, struct svc_req *)) callplaces_1_svc;
 		break;
 
 	default:
@@ -62,15 +62,15 @@ main (int argc, char **argv)
 {
 	register SVCXPRT *transp;
 
-	pmap_unset (AIRPORT_PROG, AIRPORT_VERS);
+	pmap_unset (CLIENTPLACES_PROG, CLIENTPLACES_VERS);
 
 	transp = svcudp_create(RPC_ANYSOCK);
 	if (transp == NULL) {
 		fprintf (stderr, "%s", "cannot create udp service.");
 		exit(1);
 	}
-	if (!svc_register(transp, AIRPORT_PROG, AIRPORT_VERS, airport_prog_1, IPPROTO_UDP)) {
-		fprintf (stderr, "%s", "unable to register (AIRPORT_PROG, AIRPORT_VERS, udp).");
+	if (!svc_register(transp, CLIENTPLACES_PROG, CLIENTPLACES_VERS, clientplaces_prog_1, IPPROTO_UDP)) {
+		fprintf (stderr, "%s", "unable to register (CLIENTPLACES_PROG, CLIENTPLACES_VERS, udp).");
 		exit(1);
 	}
 
@@ -79,8 +79,8 @@ main (int argc, char **argv)
 		fprintf (stderr, "%s", "cannot create tcp service.");
 		exit(1);
 	}
-	if (!svc_register(transp, AIRPORT_PROG, AIRPORT_VERS, airport_prog_1, IPPROTO_TCP)) {
-		fprintf (stderr, "%s", "unable to register (AIRPORT_PROG, AIRPORT_VERS, tcp).");
+	if (!svc_register(transp, CLIENTPLACES_PROG, CLIENTPLACES_VERS, clientplaces_prog_1, IPPROTO_TCP)) {
+		fprintf (stderr, "%s", "unable to register (CLIENTPLACES_PROG, CLIENTPLACES_VERS, tcp).");
 		exit(1);
 	}
 

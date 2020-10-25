@@ -11,7 +11,9 @@ callairport_1_svc(coordinate *argp, struct svc_req *rqstp)
 {
 	static returnPA  result;
 
-	result.error = 3;
+	/*
+	 * insert server code here
+	 */
 
 	return &result;
 }

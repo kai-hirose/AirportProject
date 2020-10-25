@@ -18,9 +18,9 @@ SOURCESPA_SVC.h =
 SOURCESPA.x = PlacesAirport.x
 
 #ClientPlaces files
-TARGETSCP_SVC.c = ClientPlaces_svc.c ClientPlaces_server.c ClientPlaces_xdr.c PlacesAirport_xdr.c PlacesAirport_clnt.c
+TARGETSCP_SVC.c = ClientPlaces_svc.c ClientPlaces_server.c ClientPlaces_xdr.c PlacesAirport_clnt.c PlacesAirport_xdr.c
 TARGETSCP_CLNT.c = ClientPlaces_clnt.c ClientPlaces_client.c ClientPlaces_xdr.c 
-TARGETSCP = ClientPlaces.h ClientPlaces_xdr.c ClientPlaces_clnt.c ClientPlaces_svc.c ClientPlaces_client.c ClientPlaces_server.c PlacesAirport.h
+TARGETSCP = ClientPlaces.h ClientPlaces_xdr.c ClientPlaces_clnt.c ClientPlaces_svc.c ClientPlaces_client.c ClientPlaces_server.c PlacesAirport.h PlacesAirport_xdr.c PlacesAirport_clnt.c
 
 #PlacesAirport files
 TARGETSPA_SVC.c = PlacesAirport_svc.c PlacesAirport_server.c PlacesAirport_xdr.c
@@ -32,8 +32,8 @@ TARGETSPA = PlacesAirport.h PlacesAirport_xdr.c PlacesAirport_clnt.c PlacesAirpo
 OBJECTSCP_CLNT = $(SOURCESCP_CLNT.c:%.c=%.o)  $(TARGETSCP_CLNT.c:%.c=%.o)
 OBJECTSCP_SVC = $(SOURCESCP_SVC.c:%.c=%.o) $(TARGETSCP_SVC.c:%.c=%.o)
 
-OBJECTSPA_CLNT = $(SOURCESPA_CLNT.c:%.c=%.o)$(TARGETSPA_CLNT.c:%.c=%.o)
-OBJECTSPA_SVC = $(SOURCESPA_SVC.c:%.c=%.o)$(TARGETSPA_SVC.c:%.c=%.o)
+OBJECTSPA_CLNT = $(SOURCESPA_CLNT.c:%.c=%.o) $(TARGETSPA_CLNT.c:%.c=%.o)
+OBJECTSPA_SVC = $(SOURCESPA_SVC.c:%.c=%.o) $(TARGETSPA_SVC.c:%.c=%.o)
 
 # Compiler flags 
 
@@ -47,7 +47,7 @@ RPCGENFLAGS =
 
 # Targets 
 
-all : $(CLIENTCP) $(SERVERCP) $(SERVERPA)
+all : $(CLIENTCP) $(SERVERCP) $(SERVERPA) $(CLIENTPA)
 
 #$(TARGETS) : $(SOURCES.x) 
 #	rpcgen $(RPCGENFLAGS) $(SOURCES.x)
@@ -61,16 +61,16 @@ $(OBJECTSPA_CLNT) : $(SOURCESPA_CLNT.c) $(SOURCESPA_CLNT.h) $(TARGETSPA_CLNT.c)
 $(OBJECTSPA_SVC) : $(SOURCESPA_SVC.c) $(SOURCESPA_SVC.h) $(TARGETSPA_SVC.c) 
 
 $(CLIENTCP) : $(OBJECTSCP_CLNT) 
-	$(LINK.cc) -std=c++11 -o $(CLIENTCP) $(OBJECTSCP_CLNT) $(LDLIBS) 
+	$(LINK.cc) -o $(CLIENTCP) $(OBJECTSCP_CLNT) $(LDLIBS) 
 
 $(CLIENTPA) : $(OBJECTSPA_CLNT) 
-	$(LINK.cc) -std=c++11 -o $(CLIENTPA) $(OBJECTSPA_CLNT) $(LDLIBS) 
+	$(LINK.cc) -o $(CLIENTPA) $(OBJECTSPA_CLNT) $(LDLIBS) 
 
 $(SERVERCP) : $(OBJECTSCP_SVC) 
-	$(LINK.cc) -std=c++11 -o $(SERVERCP) $(OBJECTSCP_SVC) $(LDLIBS)
+	$(LINK.cc) -o $(SERVERCP) $(OBJECTSCP_SVC) $(LDLIBS)
 
 $(SERVERPA) : $(OBJECTSPA_SVC) 
-	$(LINK.cc) -std=c++11 -o $(SERVERPA) $(OBJECTSPA_SVC) $(LDLIBS)
+	$(LINK.cc) -o $(SERVERPA) $(OBJECTSPA_SVC) $(LDLIBS)
 	
 clean:
 	$(RM) core $(OBJECTSCP_CLNT) $(OBJECTSCP_SVC) $(CLIENTCP) $(SERVERCP) $(OBJECTSPA_CLNT) $(OBJECTSPA_SVC) $(CLIENTPA) $(SERVERPA)
