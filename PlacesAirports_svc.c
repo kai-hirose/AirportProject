@@ -4,6 +4,7 @@
  */
 
 #include "PlacesAirports.h"
+#include "KDTree.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <rpc/pmap_clnt.h>
@@ -57,9 +58,17 @@ places_airport_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 	return;
 }
 
+KDTree myTree;
+
 int
 main (int argc, char **argv)
 {
+	//Build the tree
+	if (argc < 2) {
+		printf ("usage: %s airportfilepath\n", argv[0]);
+		exit (1);
+	}
+	myTree.buildAirportTree(argv[1]);
 	register SVCXPRT *transp;
 
 	pmap_unset (PLACES_AIRPORT_PROG, PLACES_AIRPORT_VERS);

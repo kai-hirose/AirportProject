@@ -24,24 +24,29 @@ typedef char *state;
 typedef struct tNode *tNodePtr;
 
 struct place {
-	name placename;
-	state placestate;
+	name name;
+	state state;
 	double lat;
 	double lon;
 };
 typedef struct place place;
 
+#ifndef AIRPORT
+#define AIRPORT
 struct airport {
-	code airportcode;
-	name airportname;
+	code code;
+	name name;
 	double lat;
 	double lon;
-	double distance;
+	double dist;
 };
 typedef struct airport airport;
+#endif
 
+#ifndef AIRPORTLIST
+#define AIRPORTLIST
 struct airportList {
-	name placename;
+	name name;
 	airport airport1;
 	airport airport2;
 	airport airport3;
@@ -49,7 +54,10 @@ struct airportList {
 	airport airport5;
 };
 typedef struct airportList airportList;
+#endif
 
+#ifndef LIST_RET
+#define LIST_RET
 struct list_ret {
 	int err;
 	union {
@@ -57,12 +65,16 @@ struct list_ret {
 	} list_ret_u;
 };
 typedef struct list_ret list_ret;
+#endif
 
+#ifndef COORDINATE
+#define COORDINATE
 struct coordinate {
 	double lat;
 	double lon;
 };
 typedef struct coordinate coordinate;
+#endif
 
 struct tNode {
 	tNodePtr array;
@@ -72,7 +84,7 @@ struct tNode {
 };
 typedef struct tNode tNode;
 
-#define CLIENT_PLACES_PROG 0x66454318
+#define CLIENT_PLACES_PROG 0x66454323
 #define CLIENT_PLACES_VERS 1
 
 #if defined(__STDC__) || defined(__cplusplus)

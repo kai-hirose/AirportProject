@@ -24,21 +24,30 @@ xdr_code (XDR *xdrs, code *objp)
 	return TRUE;
 }
 
+bool_t
+xdr_state (XDR *xdrs, state *objp)
+{
+	register int32_t *buf;
+
+	 if (!xdr_string (xdrs, objp, MAXLEN))
+		 return FALSE;
+	return TRUE;
+}
 
 bool_t
 xdr_airport (XDR *xdrs, airport *objp)
 {
 	register int32_t *buf;
 
-	 if (!xdr_code (xdrs, &objp->airportcode))
+	 if (!xdr_code (xdrs, &objp->code))
 		 return FALSE;
-	 if (!xdr_name (xdrs, &objp->airportname))
+	 if (!xdr_name (xdrs, &objp->name))
 		 return FALSE;
 	 if (!xdr_double (xdrs, &objp->lat))
 		 return FALSE;
 	 if (!xdr_double (xdrs, &objp->lon))
 		 return FALSE;
-	 if (!xdr_double (xdrs, &objp->distance))
+	 if (!xdr_double (xdrs, &objp->dist))
 		 return FALSE;
 	return TRUE;
 }
@@ -48,7 +57,7 @@ xdr_airportList (XDR *xdrs, airportList *objp)
 {
 	register int32_t *buf;
 
-	 if (!xdr_name (xdrs, &objp->placename))
+	 if (!xdr_name (xdrs, &objp->name))
 		 return FALSE;
 	 if (!xdr_airport (xdrs, &objp->airport1))
 		 return FALSE;
@@ -62,7 +71,6 @@ xdr_airportList (XDR *xdrs, airportList *objp)
 		 return FALSE;
 	return TRUE;
 }
-
 
 bool_t
 xdr_list_ret (XDR *xdrs, list_ret *objp)

@@ -19,19 +19,26 @@ typedef char *name;
 
 typedef char *code;
 
-typedef struct kDNode *kDNodePtr;
+typedef char *state;
 
+#ifndef AIRPORT
+#define AIRPORT
 struct airport {
-	code airportcode;
-	name airportname;
+	code code;
+	name name;
+	state state;
 	double lat;
 	double lon;
-	double distance;
+	double dist;
 };
 typedef struct airport airport;
+#endif
 
+
+#ifndef AIRPORTLIST
+#define AIRPORTLIST
 struct airportList {
-	name placename;
+	name name;
 	airport airport1;
 	airport airport2;
 	airport airport3;
@@ -39,7 +46,10 @@ struct airportList {
 	airport airport5;
 };
 typedef struct airportList airportList;
+#endif
 
+#ifndef LIST_RET
+#define LIST_RET
 struct list_ret {
 	int err;
 	union {
@@ -47,21 +57,18 @@ struct list_ret {
 	} list_ret_u;
 };
 typedef struct list_ret list_ret;
+#endif
 
+#ifndef COORDINATE
+#define COORDINATE
 struct coordinate {
 	double lat;
 	double lon;
 };
 typedef struct coordinate coordinate;
+#endif
 
-struct kDNode {
-	kDNodePtr right;
-	kDNodePtr left;
-	airport airport;
-};
-typedef struct kDNode kDNode;
-
-#define PLACES_AIRPORT_PROG 0x26459329
+#define PLACES_AIRPORT_PROG 0x66454320
 #define PLACES_AIRPORT_VERS 1
 
 #if defined(__STDC__) || defined(__cplusplus)
@@ -82,22 +89,20 @@ extern int places_airport_prog_1_freeresult ();
 #if defined(__STDC__) || defined(__cplusplus)
 extern  bool_t xdr_name (XDR *, name*);
 extern  bool_t xdr_code (XDR *, code*);
-extern  bool_t xdr_kDNodePtr (XDR *, kDNodePtr*);
+extern  bool_t xdr_state (XDR *, state*);
 extern  bool_t xdr_airport (XDR *, airport*);
 extern  bool_t xdr_airportList (XDR *, airportList*);
 extern  bool_t xdr_list_ret (XDR *, list_ret*);
 extern  bool_t xdr_coordinate (XDR *, coordinate*);
-extern  bool_t xdr_kDNode (XDR *, kDNode*);
 
 #else /* K&R C */
 extern bool_t xdr_name ();
 extern bool_t xdr_code ();
-extern bool_t xdr_kDNodePtr ();
+extern bool_t xdr_state ();
 extern bool_t xdr_airport ();
 extern bool_t xdr_airportList ();
 extern bool_t xdr_list_ret ();
 extern bool_t xdr_coordinate ();
-extern bool_t xdr_kDNode ();
 
 #endif /* K&R C */
 

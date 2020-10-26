@@ -6,16 +6,6 @@
 #include "ClientPlaces.h"
 
 bool_t
-xdr_state (XDR *xdrs, state *objp)
-{
-	register int32_t *buf;
-
-	 if (!xdr_string (xdrs, objp, MAXLEN))
-		 return FALSE;
-	return TRUE;
-}
-
-bool_t
 xdr_tNodePtr (XDR *xdrs, tNodePtr *objp)
 {
 	register int32_t *buf;
@@ -30,9 +20,9 @@ xdr_place (XDR *xdrs, place *objp)
 {
 	register int32_t *buf;
 
-	 if (!xdr_name (xdrs, &objp->placename))
+	 if (!xdr_name (xdrs, &objp->name))
 		 return FALSE;
-	 if (!xdr_state (xdrs, &objp->placestate))
+	 if (!xdr_state (xdrs, &objp->state))
 		 return FALSE;
 	 if (!xdr_double (xdrs, &objp->lat))
 		 return FALSE;

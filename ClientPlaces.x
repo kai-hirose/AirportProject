@@ -5,22 +5,22 @@ typedef string state<MAXLEN>;
 typedef struct tNode* tNodePtr;
 
 struct place{
-	name placename;
-	state placestate;
+	name name;
+	state state;
 	double lat;
 	double lon;
 };
 
 struct airport{
-    code airportcode;
-    name airportname;
+    code code;
+    name name;
     double lat;
     double lon;
-    double distance;
+    double dist;
 };
 
 struct airportList{
-    name placename;
+    name name;
     airport airport1;
     airport airport2;
     airport airport3;
@@ -51,4 +51,4 @@ program CLIENT_PLACES_PROG{
     version CLIENT_PLACES_VERS{
         list_ret CALL_PLACES(name) = 1;
     } = 1;
-} = 0x66454318; 
+} = 0x66454323; 

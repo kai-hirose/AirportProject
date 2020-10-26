@@ -5,17 +5,18 @@
  */
 
 #include "ClientPlaces.h"
-
+#include <string>
 
 void
-client_places_prog_1(char *host)
+client_places_prog_1(char* host, std::string city, std::string state)
 {
 	CLIENT *clnt;
 	list_ret  *result_1;
-	name  call_places_1_arg = host;
+	std::string conc = city+state;
+	name  call_places_1_arg = const_cast<char*>(conc.c_str());
 
 #ifndef	DEBUG
-	clnt = clnt_create (host, CLIENT_PLACES_PROG, CLIENT_PLACES_VERS, "tcp");
+	clnt = clnt_create (host, CLIENT_PLACES_PROG, CLIENT_PLACES_VERS, "udp");
 	if (clnt == NULL) {
 		clnt_pcreateerror (host);
 		exit (1);
@@ -24,10 +25,9 @@ client_places_prog_1(char *host)
 
 	result_1 = call_places_1(&call_places_1_arg, clnt);
 	if (result_1 == (list_ret *) NULL) {
-		printf("No\n");
 		clnt_perror (clnt, "call failed");
 	}else{
-		printf("Test\n");
+		printf("%s", result_1->list_ret_u.list.name);
 	}
 #ifndef	DEBUG
 	clnt_destroy (clnt);
@@ -38,13 +38,17 @@ client_places_prog_1(char *host)
 int
 main (int argc, char *argv[])
 {
-	char *host;
+	char* host;
+	std::string city;
+	std::string state;
 
-	if (argc < 2) {
-		printf ("usage: %s server_host\n", argv[0]);
+	if (argc < 4) {
+		printf ("usage: %s placeshost city state\n", argv[0]);
 		exit (1);
 	}
 	host = argv[1];
-	client_places_prog_1 (host);
+	city = argv[2];
+	state = argv[3];
+	client_places_prog_1 (host, city, state);
 exit (0);
 }

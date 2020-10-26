@@ -57,9 +57,18 @@ client_places_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 	return;
 }
 
+char* host;
+
 int
 main (int argc, char **argv)
 {
+	//Get the host and build the tree.
+	if (argc < 3) {
+		printf ("usage: %s host placesfilepath\n", argv[0]);
+		exit (1);
+	}
+	host = argv[1];
+
 	register SVCXPRT *transp;
 
 	pmap_unset (CLIENT_PLACES_PROG, CLIENT_PLACES_VERS);

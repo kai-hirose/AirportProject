@@ -13,7 +13,9 @@ places_airport_prog_1(char *host)
 	CLIENT *clnt;
 	list_ret  *result_1;
 	coordinate  call_airports_1_arg;
-
+	call_airports_1_arg.lat = 47.441406;
+	call_airports_1_arg.lon = -122.293077;
+	printf("%f\n", call_airports_1_arg.lat);
 #ifndef	DEBUG
 	clnt = clnt_create (host, PLACES_AIRPORT_PROG, PLACES_AIRPORT_VERS, "udp");
 	if (clnt == NULL) {

@@ -5,19 +5,35 @@
  */
 
 #include "ClientPlaces.h"
+#include "PlacesAirports.h"
+
+extern "C" char* host;
 
 list_ret *
 call_places_1_svc(name *argp, struct svc_req *rqstp)
 {
-	printf("Hello.\n");
-	static list_ret  result;
-	result.err = 0;
-	airport test;
-	result.list_ret_u.list.placename = "test\n";
-	result.list_ret_u.list.airport1 = test;
-	result.list_ret_u.list.airport2 = test;
-	result.list_ret_u.list.airport3 = test;
-	result.list_ret_u.list.airport4 = test;
-	result.list_ret_u.list.airport5 = test;
-	return &result;
+	list_ret*  result_1;
+	CLIENT *clnt;
+	coordinate  call_airports_1_arg;
+	call_airports_1_arg.lat = 47.441406;
+	call_airports_1_arg.lon = -122.293077;
+
+#ifndef	DEBUG
+	clnt = clnt_create (host, PLACES_AIRPORT_PROG, PLACES_AIRPORT_VERS, "udp");
+	if (clnt == NULL) {
+		clnt_pcreateerror (host);
+		exit (1);
+	}
+#endif	/* DEBUG */
+
+	result_1 = call_airports_1(&call_airports_1_arg, clnt);
+	if (result_1 == (list_ret *) NULL) {
+		clnt_perror (clnt, "call failed");
+	}
+
+#ifndef	DEBUG
+	clnt_destroy (clnt);
+#endif	 /* DEBUG */
+
+	return result_1;
 }

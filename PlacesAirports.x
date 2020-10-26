@@ -1,18 +1,19 @@
 const MAXLEN = 256;
 typedef string name<MAXLEN>;
 typedef string code<MAXLEN>;
-typedef struct kDNode* kDNodePtr;
+typedef string state<MAXLEN>;
 
 struct airport{
-    code airportcode;
-    name airportname;
+    code code;
+    name name;
+    state state;
     double lat;
     double lon;
-    double distance;
+    double dist;
 };
 
 struct airportList{
-    name placename;
+    name name;
     airport airport1;
     airport airport2;
     airport airport3;
@@ -32,14 +33,8 @@ struct coordinate{
     double lon;
 };
 
-struct kDNode{
-    kDNodePtr right;
-    kDNodePtr left;
-    airport airport;
-};
-
 program PLACES_AIRPORT_PROG{
     version PLACES_AIRPORT_VERS{
         list_ret CALL_AIRPORTS(coordinate) = 1;
     } = 1;
-} = 0x26459329; 
+} = 0x66454320; 

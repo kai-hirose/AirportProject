@@ -3,15 +3,36 @@
  * These are only templates and you can use them
  * as a guideline for developing your own functions.
  */
-
 #include "PlacesAirports.h"
 #include "KDTree.h"
 
-list_ret *
-call_airports_1_svc(coordinate *argp, struct svc_req *rqstp)
+void copyValues(airport* result, KDTree::airportPA val) {
+	result->code = strdup(const_cast<char*>(val.code.c_str()));
+	result->name = strdup(const_cast<char*>(val.name.c_str()));
+	result->state = strdup(const_cast<char*>(val.state.c_str()));
+	result->lat = val.lat;
+	result->lon = val.lon;
+	result->dist = val.dist;
+}
+
+extern "C" KDTree myTree;
+
+list_ret*
+call_airports_1_svc(coordinate* argp, struct svc_req* rqstp)
 {
+	/*still need to free memory*/
 	static list_ret  result;
-	KDTree myTree("airport-locations.txt");
-	
+	KDTree::coordinatePA send;
+	send.lat = argp->lat;
+	send.lon = argp->lon;
+	KDTree::returnPA returnVals = myTree.fiveNearestAP(send);
+	copyValues(&result.list_ret_u.list.airport1, returnVals.array[0]);
+	copyValues(&result.list_ret_u.list.airport2, returnVals.array[1]);
+	copyValues(&result.list_ret_u.list.airport3, returnVals.array[2]);
+	copyValues(&result.list_ret_u.list.airport4, returnVals.array[3]);
+	copyValues(&result.list_ret_u.list.airport5, returnVals.array[4]);
+	//The places server will fill out the name of the place these airports are relative to before giving it back to the client.
+	result.list_ret_u.list.name = strdup("TBF");
+	result.err = 0;
 	return &result;
 }
