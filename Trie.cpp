@@ -25,10 +25,23 @@ public:
         coordinate search(string);
         void insert(tNode *root, string properName, string lat, string lon);
         tNode* genNode(void);
-
+        string whiteRemover(string);
 private:
         tNode *root;
 };
+
+
+
+string Trie::whiteRemover(string str)
+{
+    string temp;
+    for(int i = 0; i < str.length(); i++)
+    {
+        if(!isspace(str[i])) temp += str[i];
+    }
+    return temp;
+    
+}
 
 Trie::Trie()
 {
@@ -59,72 +72,74 @@ Trie::Trie()
                 }
                 //After the "chunks" of text that make up the state, codes, and city
                 //Latitude and longitude are in the 7th and 8th "chunk"
-                //if (count == 7)
-                //    lat = temp;
-                //if (count == 8)
-                //    lon = temp;
-                //count++;
-                
+                string latlon = line.substr(143, line.length());
+                int index = latlon.rfind('-');
+                lat = whiteRemover(latlon.substr(0, 9));
+                lon = whiteRemover(latlon.substr(10,latlon.length()));
+                // cout << "lat:" + lat + " lon:" + lon << endl;
             }
             //Extract state and city from the text we saved earlier.
             state = citywithstate.substr(0, 2);
             city = citywithstate.substr(9, citywithstate.length());
             // cout << "state:" << state + " city:" + city + " lat:" + lat + " lon:" + lon << endl;
-             string stateCitySpaces = city + state;
-             string properName;
-             for (int i = 0; i < stateCitySpaces.length(); i++)
-             {
-                 if (stateCitySpaces[i] != ' ' && isalpha(stateCitySpaces[i]))
-                 {
-                     //Gets rid of special chars
-                     properName += tolower(stateCitySpaces[i]);
-                 }
-             }
-             //cout << properName << endl;
-             insert(root,properName,lat,lon);
+            string stateCitySpaces = city + state;
+            string properName;
+            for (int i = 0; i < stateCitySpaces.length(); i++)
+            {
+                if (stateCitySpaces[i] != ' ' && isalpha(stateCitySpaces[i]))
+                {
+                    //Gets rid of special chars
+                    properName += tolower(stateCitySpaces[i]);
+                }
+            }
+            //cout << properName << endl;
+            insert(root, properName, lat, lon);
             ss.clear();
         }
     }
-        myfile.close();
+    myfile.close();
     cout << "Tree built." << endl;
     if (root == nullptr)
         cout << "fail" << endl;
 }
 
-Trie::tNode* Trie::genNode()
+Trie::tNode *Trie::genNode()
 {
-    tNode* tNodePtr = new tNode;
-    for(int i = 0; i < 26; i++){
+    tNode *tNodePtr = new tNode;
+    for (int i = 0; i < 26; i++)
+    {
         tNodePtr->array[i] = nullptr;
     }
     return tNodePtr;
 }
 
-void Trie::insert(tNode* root,string properName,string lat, string lon){ 
-             tNode* temp = root;
-             for (int i = 0; i < properName.length(); i++)
-             {
-                 int index = tolower(properName[i]) - 'a';
-                 //If the node'a array is not allocated.
-                 //  cout << ((int)properName[i]) - 'a' << endl;
+void Trie::insert(tNode *root, string properName, string lat, string lon)
+{
+    tNode *temp = root;
+    for (int i = 0; i < properName.length(); i++)
+    {
+        int index = tolower(properName[i]) - 'a';
+        //If the node'a array is not allocated.
+        //  cout << ((int)properName[i]) - 'a' << endl;
 
-                 if (isalpha(properName[i]))
-                 { 
-                     //cout << index << endl;
-                     temp->index = index;
-                    //  cout << "lat:" + to_string(temp->lat) + " lon:" + to_string(temp->lon) << endl;
-                 }
-                 else{
-                     return;
-                 }
-                 if (temp->array[temp->index] == nullptr)
-                 {
-                     temp->array[temp->index] = genNode();
-                     temp->lat = std::stod(lat);
-                     temp->lon = std::stod(lon);
-                 }
-                 temp = temp->array[index];
-             }
+        if (isalpha(properName[i]))
+        {
+            //cout << index << endl;
+            temp->index = index;
+            //  cout << "lat:" + to_string(temp->lat) + " lon:" + to_string(temp->lon) << endl;
+        }
+        else
+        {
+            return;
+        }
+        if (temp->array[temp->index] == nullptr)
+        {
+            temp->array[temp->index] = genNode();
+            temp->lat = std::stod(lat);
+            temp->lon = std::stod(lon);
+        }
+        temp = temp->array[index];
+    }
 }
 
 Trie::coordinate Trie::search(string input)
@@ -141,7 +156,7 @@ Trie::coordinate Trie::search(string input)
 
     tNode *temp = root;
     Trie::coordinate returnVal;
-    
+
     for (int i = 0; i < name.length(); i++)
     {
         int index = tolower(name[i]) - 'a';
@@ -151,10 +166,10 @@ Trie::coordinate Trie::search(string input)
             cout << "failed" << endl;
         }
 
-        //Invalid letter returns an invalid latitude that the main program checks. 
+        //Invalid letter returns an invalid latitude that the main program checks.
         //Return the lat and lon stored in the node if index is not -1
         //-1 indicates there is more than one branch beneath.
-        if (i == name.length()-1)
+        if (i == name.length() - 1)
         {
             returnVal.lat = temp->lat;
             returnVal.lon = temp->lon;
@@ -162,7 +177,7 @@ Trie::coordinate Trie::search(string input)
             return returnVal;
         }
         // temp = &(temp->array[((int)tolower(name[i])) - 'a']);
-        temp = temp->array[index]; 
+        temp = temp->array[index];
     }
 
     //If we havent returned anything somehow, return invalid lat.
@@ -173,5 +188,5 @@ Trie::coordinate Trie::search(string input)
 int main()
 {
     Trie obj;
-    obj.search("Seattle City");
+       obj.search("Attu Station CDP");
 }
