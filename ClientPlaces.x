@@ -14,6 +14,7 @@ struct place{
 struct airport{
     code code;
     name name;
+    state state;
     double lat;
     double lon;
     double dist;
@@ -21,6 +22,7 @@ struct airport{
 
 struct airportList{
     name name;
+    coordinate coordinate;
     airport airport1;
     airport airport2;
     airport airport3;

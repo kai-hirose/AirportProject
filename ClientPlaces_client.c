@@ -27,8 +27,16 @@ client_places_prog_1(char* host, std::string city, std::string state)
 	if (result_1 == (list_ret *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}else{
-		printf("%s", result_1->list_ret_u.list.name);
+		printf("%s\n", result_1->list_ret_u.list.name);
+		printf("code=%s, name=%s, state=%s, distance=%f \n\n", result_1->list_ret_u.list.airport1.code, result_1->list_ret_u.list.airport1.name, result_1->list_ret_u.list.airport1.state, result_1->list_ret_u.list.airport1.dist);
+		printf("code=%s, name=%s, state=%s, distance=%f \n\n", result_1->list_ret_u.list.airport2.code, result_1->list_ret_u.list.airport2.name, result_1->list_ret_u.list.airport2.state, result_1->list_ret_u.list.airport2.dist);
+		printf("code=%s, name=%s, state=%s, distance=%f \n\n", result_1->list_ret_u.list.airport3.code, result_1->list_ret_u.list.airport3.name, result_1->list_ret_u.list.airport3.state, result_1->list_ret_u.list.airport3.dist);
+		printf("code=%s, name=%s, state=%s, distance=%f \n\n", result_1->list_ret_u.list.airport4.code, result_1->list_ret_u.list.airport4.name, result_1->list_ret_u.list.airport4.state, result_1->list_ret_u.list.airport4.dist);
+		printf("code=%s, name=%s, state=%s, distance=%f \n\n", result_1->list_ret_u.list.airport5.code, result_1->list_ret_u.list.airport5.name, result_1->list_ret_u.list.airport5.state, result_1->list_ret_u.list.airport5.dist);
 	}
+
+	//Free client memory before closing everything.
+    clnt_freeres(clnt, (xdrproc_t)xdr_list_ret, result_1);
 #ifndef	DEBUG
 	clnt_destroy (clnt);
 #endif	 /* DEBUG */

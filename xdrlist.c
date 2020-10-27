@@ -43,6 +43,8 @@ xdr_airport (XDR *xdrs, airport *objp)
 		 return FALSE;
 	 if (!xdr_name (xdrs, &objp->name))
 		 return FALSE;
+	 if (!xdr_state (xdrs, &objp->state))
+		 return FALSE;
 	 if (!xdr_double (xdrs, &objp->lat))
 		 return FALSE;
 	 if (!xdr_double (xdrs, &objp->lon))
@@ -58,6 +60,8 @@ xdr_airportList (XDR *xdrs, airportList *objp)
 	register int32_t *buf;
 
 	 if (!xdr_name (xdrs, &objp->name))
+		 return FALSE;
+	 if (!xdr_coordinate (xdrs, &objp->coordinate))
 		 return FALSE;
 	 if (!xdr_airport (xdrs, &objp->airport1))
 		 return FALSE;

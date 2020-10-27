@@ -169,9 +169,3 @@ Trie::coordinate Trie::search(string input)
     returnVal.lat = -999;
     return returnVal;
 }
-
-int main()
-{
-    Trie obj;
-    obj.search("Seattle City");
-}

@@ -62,8 +62,8 @@ void KDTree::buildAirportTree(std::string filename)
 			ap.code = ap.code.substr(1, 3);
 			buffer >> ap.lat;
 			buffer >> ap.lon;
-			buffer >> ap.name;
-			if (!buffer.eof()) {
+			ap.name = "";
+			while (!buffer.eof()) {
 				std::string temp;
 				buffer >> temp;
 				ap.name = ap.name + " " + temp;
