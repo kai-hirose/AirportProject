@@ -13,7 +13,7 @@ public:
         ~Trie();
         
         static const int ALPHASIZE = 26;
-        static const int STATESIZE = 50;
+        static const int STATESIZE = 52;
         
         struct tNode
         {
