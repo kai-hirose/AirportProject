@@ -58,7 +58,9 @@ places_airport_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 	return;
 }
 
-KDTree myTree;
+char* airportPath;
+
+KDTree tree1;
 
 int
 main (int argc, char **argv)
@@ -68,7 +70,8 @@ main (int argc, char **argv)
 		printf ("usage: %s airportfilepath\n", argv[0]);
 		exit (1);
 	}
-	myTree.buildAirportTree(argv[1]);
+	airportPath = argv[1];
+	tree1.buildAirportTree(airportPath);
 	register SVCXPRT *transp;
 
 	pmap_unset (PLACES_AIRPORT_PROG, PLACES_AIRPORT_VERS);

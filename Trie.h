@@ -1,34 +1,44 @@
-#ifndef TRIE_H
-#define TRIE_H
-
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <iostream>
 using namespace std;
 
+#ifndef TRIE_H
+#define TRIE_H
 class Trie{
 public:
-        static const int SIZE = 26;
+        Trie();
+
+        ~Trie();
+        
+        static const int ALPHASIZE = 26;
+        static const int STATESIZE = 50;
+        
         struct tNode
         {
-                tNode *array[SIZE]; 
+                tNode* array[ALPHASIZE]; 
                 int index;
-                double lat;
-                double lon;
+                double lat[STATESIZE];
+                double lon[STATESIZE];
+                string city[STATESIZE];
+                string state[STATESIZE];
         };
 
-        struct coordinate
+        struct returnstruct
         {
                 double lat;
                 double lon;
+                string city;
+                string state;
         };
 
-        Trie();
-        coordinate search(string);
-        void insert(tNode *root, string properName, string lat, string lon);
-        tNode* genNode(void);
-        string whiteRemover(string);
+        void buildTrie(string filename);
+
+        returnstruct search(string city, string state);
+        void insert(tNode *root, string lat, string lon, string city, string state);
+        tNode* genNode();
+        string whiteRemover(string name);
 private:
         tNode *root;
 };

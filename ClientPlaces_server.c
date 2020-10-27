@@ -6,39 +6,77 @@
 
 #include "ClientPlaces.h"
 #include "PlacesAirports.h"
-//#include "Trie.h"
+#include <string>
+#include "Trie.h"
 
-//extern "C" Trie Trie;
-extern "C" char* host;
+
+extern "C" char* placesHost;
+extern "C" Trie trie1;
+
+//Function to fill the information for return val.
+void fillValues(airport* filler) {
+	filler->code = strdup("fill");
+	filler->name = strdup("fill");
+	filler->state = strdup("fill");
+	filler->lon =0;
+	filler->dist =0;
+}
 
 list_ret *
 call_places_1_svc(name *argp, struct svc_req *rqstp)
 {
+	//Variables
+	static list_ret result;
 	list_ret*  result_1;
 	CLIENT *clnt;
 	coordinate  call_airports_1_arg;
-	call_airports_1_arg.lat = 40.704235;
-	call_airports_1_arg.lon = -73.917931;
+
+	std::string search_arg = *argp;
+	
+	std::string city = search_arg.substr(0, search_arg.length()-2);
+	std::string state = search_arg.substr(search_arg.length()-2, search_arg.length());
+	cout<<city<< " " << state<<endl;
+	Trie::returnstruct trie_ret= trie1.search(city, state);
+	
+
+	//Free previous memory
+  	xdr_free((xdrproc_t)xdr_list_ret, (char *)&result);
+
+	if(trie_ret.lat == -1000 || trie_ret.lat == -999){
+		fillValues(&result.list_ret_u.list.airport1);
+		fillValues(&result.list_ret_u.list.airport2);
+		fillValues(&result.list_ret_u.list.airport3);
+		fillValues(&result.list_ret_u.list.airport4);
+		fillValues(&result.list_ret_u.list.airport5);
+		if (trie_ret.lat == -999){
+			result.list_ret_u.list.name = strdup("fill");
+			result.list_ret_u.list.airport1.lat = (double)-999; 
+			return &result;
+		}else{
+			result.list_ret_u.list.name = strdup("fill");
+			result.list_ret_u.list.airport1.lat = (double)-1000; 
+			return &result;
+		}
+	}
+	call_airports_1_arg.lat = trie_ret.lat;
+	call_airports_1_arg.lon = trie_ret.lon;
 
 #ifndef	DEBUG
-	clnt = clnt_create (host, PLACES_AIRPORT_PROG, PLACES_AIRPORT_VERS, "udp");
+	clnt = clnt_create (placesHost, PLACES_AIRPORT_PROG, PLACES_AIRPORT_VERS, "udp");
 	if (clnt == NULL) {
-		clnt_pcreateerror (host);
+		clnt_pcreateerror (placesHost);
 		exit (1);
 	}
 #endif	/* DEBUG */
 
 	result_1 = call_airports_1(&call_airports_1_arg, clnt);
-	if (result_1 == (list_ret *) NULL) {
+	if (result_1 == (list_ret*) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
-	
-	return result_1;
-	
 
-	//Free client memory before closing everything.
-    clnt_freeres(clnt, (xdrproc_t)xdr_list_ret, result_1);
 #ifndef	DEBUG
 	clnt_destroy (clnt);
 #endif	 /* DEBUG */
+	result_1->list_ret_u.list.name = *argp;
+	return result_1;
 }

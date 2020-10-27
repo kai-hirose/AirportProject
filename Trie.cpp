@@ -3,9 +3,12 @@
 #include <sstream>
 #include <iostream>
 #include "Trie.h"
-using namespace std;
 
 
+Trie::Trie(){
+    //Just make the object and do nothing until we get a filename and call BuildTrie.
+    root = nullptr;
+}
 
 string Trie::whiteRemover(string str)
 {
@@ -18,7 +21,7 @@ string Trie::whiteRemover(string str)
     
 }
 
-Trie::Trie()
+void Trie::buildTrie(string filename)
 {
     root = genNode();
     string line;
@@ -57,18 +60,26 @@ Trie::Trie()
             state = citywithstate.substr(0, 2);
             city = citywithstate.substr(9, citywithstate.length());
             // cout << "state:" << state + " city:" + city + " lat:" + lat + " lon:" + lon << endl;
-            string stateCitySpaces = city + state;
-            string properName;
-            for (int i = 0; i < stateCitySpaces.length(); i++)
+            string properCity;
+            string properState;
+            for (int i = 0; i < city.length(); i++)
             {
-                if (stateCitySpaces[i] != ' ' && isalpha(stateCitySpaces[i]))
+                if (city[i] != ' ' && isalpha(city[i]))
                 {
                     //Gets rid of special chars
-                    properName += toupper(stateCitySpaces[i]);
+                    properCity += toupper(city[i]);
+                }
+            }
+            for (int i = 0; i < state.length(); i++)
+            {
+                if (state[i] != ' ' && isalpha(state[i]))
+                {
+                    //Gets rid of special chars
+                    properState += toupper(state[i]);
                 }
             }
             //cout << properName << endl;
-            insert(root, properName, lat, lon);
+            insert(root, lat, lon, city, state);
             ss.clear();
         }
     }
@@ -82,6 +93,12 @@ Trie::tNode *Trie::genNode()
 {
     tNode *tNodePtr = new tNode;
     tNodePtr->index = -2;
+    /* iffy
+    tNodePtr->lat[0] = lat;
+    tNodePtr->lon[0] = lon;
+    tNodePtr->city[0] = city;
+    tNodePtr->state[0] = state;
+    */
     for (int i = 0; i < 26; i++)
     {
         tNodePtr->array[i] = nullptr;
@@ -89,12 +106,12 @@ Trie::tNode *Trie::genNode()
     return tNodePtr;
 }
 
-void Trie::insert(tNode *root, string properName, string lat, string lon)
+void Trie::insert(tNode *root, string lat, string lon, string city, string state)
 {
     tNode *temp = root;
-    for (int i = 0; i < properName.length(); i++)
+    for (int i = 0; i < city.length(); i++)
     {
-        int index = (int)toupper(properName[i]) - (int)'A';
+        int index = (int)toupper(city[i]) - (int)'A';
 
         if (temp->array[index] == nullptr)
         {
@@ -102,82 +119,110 @@ void Trie::insert(tNode *root, string properName, string lat, string lon)
         }
         if (temp->index == -2)
         {
-            temp->index = index;
+            temp->index = 1;
+            temp->lat[0] = std::stod(lat);
+            temp->lon[0] = std::stod(lon);
+            temp->city[0] = city;
+            temp->state[0] = state;
         }
         else
         {
-            temp->index = -1;
+            //-1 Means the state does not exist, -2 means there is but is cancelled out, 0 or higher identifies the index to cancel out.
+            int exists = -1;
+            for(int i=0;i<temp->index;i++){
+                if(temp->state[i] == state){
+                    exists = i;
+                }else if(temp->state[i]==state+"X"){
+                    exists = -2;
+                }
+            }
+            
+            if(exists == -1){
+                    temp->state[temp->index]=state;
+                    temp->city[temp->index]=city;
+                    temp->lat[temp->index]=std::stod(lat);
+                    temp->lon[temp->index]=std::stod(lon);
+                    temp->index+=1;
+            }else if (exists >=0 ){
+                temp->state[exists]=state+"X";
+            }
         }
         temp = temp->array[index];
-        temp->lat = std::stod(lat);
-        temp->lon = std::stod(lon);
     }
 }
 
-Trie::coordinate Trie::search(string input)
+
+Trie::~Trie(){
+    
+}
+
+Trie::returnstruct Trie::search(string city, string state)
 {
-    string name;
-    for (int i = 0; i < input.length(); i++)
+    string properState = "";
+    string properCity = "";
+    //Get formatted name
+    for (int i = 0; i < state.length(); i++)
     {
-        if (isalpha(input[i]))
+        if (isalpha(state[i]) && !isspace(state[i]))
         {
-            name += toupper(input[i]);
-        }
-        else
-        {
-            coordinate obj;
-            obj.lat = -999;
-            obj.lon = -999;
-            cout << "lat" + to_string(obj.lat) + " lon" + to_string(obj.lon) << endl;
-            return obj;
+            properState += toupper(state[i]);
         }
     }
-    cout << name << endl;
+    for (int i = 0; i < city.length(); i++)
+    {
+        if (isalpha(city[i]) && !isspace(city[i]))
+        {
+            properCity += toupper(city[i]);
+        }
+    }
+    cout << properState << endl;
+    cout << properCity << endl;
 
     tNode *temp = root;
-    Trie::coordinate returnVal;
+    Trie::returnstruct returnVal;
 
-    for (int i = 0; i < name.length(); i++)
+    for (int i = 0; i < properCity.length(); i++)
     {
-        int index = toupper(name[i]) - 'A';
-        cout << name[i] << endl;
+        int index = properCity[i] - 'A';
+        cout << properCity[i] << endl;
         if (temp == nullptr)
-        {
-            coordinate obj;
-            obj.lat = -999;
-            obj.lon = -999;
-            cout << "lat" + to_string(obj.lat) + " lon" + to_string(obj.lon) << endl;
-            return obj;
+        { /**change coordinatessss**/
+            returnVal.lat = -999;
+            returnVal.lon = -999;
+            returnVal.city = "Nonexistent";
+            returnVal.state = "Nonexistent";
+            cout << "lat" + to_string(returnVal.lat) + " lon" + to_string(returnVal.lon) << endl;
+            return returnVal;
         }
 
         //Invalid letter returns an invalid latitude that the main program checks.
         //Return the lat and lon stored in the node if index is not -1
         //-1 indicates there is more than one branch beneath.
-        if (i == name.length() - 1 && temp->index == -1)
+        if (i == properCity.length() - 1)
         {
-            coordinate obj;
-            obj.lat = -1000;
-            obj.lon = -1000;
-            cout << "lat" + to_string(obj.lat) + " lon" + to_string(obj.lon) << endl;
-            return obj;
+            for(int i=0;i<index;i++){
+                if(temp->state[i]==state){
+                    returnVal.city = temp->city[i];
+                    returnVal.state = state;
+                    returnVal.lat = temp->lat[i];
+                    returnVal.lon = temp->lon[i];
+                    return returnVal;
+                }else if (temp->state[i]==state+"X"){
+                    returnVal.city = "Refine";
+                    returnVal.state = "Refine";
+                    returnVal.lat = -1000;
+                    returnVal.lon = -1000;
+                    return returnVal;
+                }
+            }
         }
-        if (i == name.length() - 1)
-        {
-            returnVal.lat = temp->lat;
-            returnVal.lon = temp->lon;
-            cout << "lat" + to_string(returnVal.lat) + " lon" + to_string(returnVal.lon) << endl;
-            return returnVal;
-        }
-        // temp = &(temp->array[((int)toupper(name[i])) - 'A']);
         temp = temp->array[index];
     }
 
     //If we havent returned anything somehow, return invalid lat.
     returnVal.lat = -999;
+    returnVal.lon = -999;
+    returnVal.city = "Nonexistent";
+    returnVal.state = "Nonexistent";
     return returnVal;
-}
-int main()
-{
-    Trie obj;
-    obj.search("PattersonvilleRotterdamJunctionCdP");
 }

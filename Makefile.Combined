@@ -30,12 +30,12 @@ SOURCESPA.x = PlacesAirports.x
 #ClientPlaces files
 TARGETSCP_SVC.c = ClientPlaces_svc.c ClientPlaces_server.c ClientPlaces_xdr.c xdrlist.c PlacesAirports_clnt.c PlacesAirports_xdr.c Trie.cpp
 TARGETSCP_CLNT.c = ClientPlaces_clnt.c ClientPlaces_client.c ClientPlaces_xdr.c xdrlist.c
-TARGETSCP = ClientPlaces.h PlacesAirports.h Trie.h ClientPlaces_xdr.c PlacesAirports_xdr.c ClientPlaces_clnt.c ClientPlaces_svc.c ClientPlaces_client.c ClientPlaces_server.c PlacesAirports_clnt.c PlacesAirports_xdr.c
+TARGETSCP = ClientPlaces.h PlacesAirports.h Trie.cpp ClientPlaces_xdr.c PlacesAirports_xdr.c ClientPlaces_clnt.c ClientPlaces_svc.c ClientPlaces_client.c ClientPlaces_server.c PlacesAirports_clnt.c PlacesAirports_xdr.c
 
 #PlacesAirports files
-TARGETSPA_SVC.c = PlacesAirports_svc.c PlacesAirports_server.c xdrlist.c PlacesAirports_xdr.c KDTree.cpp 
+TARGETSPA_SVC.c = PlacesAirports_svc.c PlacesAirports_server.c xdrlist.c PlacesAirports_xdr.c KDTree.cpp
 TARGETSPA_CLNT.c = PlacesAirports_clnt.c PlacesAirports_client.c xdrlist.c PlacesAirports_xdr.c 
-TARGETSPA = PlacesAirports.h KDTree.h PlacesAirports_xdr.c PlacesAirports_clnt.c PlacesAirports_svc.c PlacesAirports_server.c PlacesAirports_client.c 
+TARGETSPA = PlacesAirports.h PlacesAirports_xdr.c PlacesAirports_clnt.c PlacesAirports_svc.c PlacesAirports_server.c PlacesAirports_client.c
 
 
 #ClientPlaces and PlacesAirports objects.

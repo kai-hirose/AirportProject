@@ -1,5 +1,5 @@
 #include <string>
-
+//Class header file for the KDTree
 #ifndef KDTREE
 #define KDTREE
 class KDTree{

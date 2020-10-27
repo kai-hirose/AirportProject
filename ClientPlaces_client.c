@@ -12,8 +12,17 @@ client_places_prog_1(char* host, std::string city, std::string state)
 {
 	CLIENT *clnt;
 	list_ret  *result_1;
+	//Format the query
 	std::string conc = city+state;
-	name  call_places_1_arg = const_cast<char*>(conc.c_str());
+	std::string formattedQuery = "";
+	for(int i=0;i<conc.length();i++){
+		if (isalpha(conc[i]) && !isspace(conc[i]))
+        {
+            formattedQuery += toupper(conc[i]);
+        }
+	}
+	
+	name  call_places_1_arg = const_cast<char*>(formattedQuery.c_str());
 
 #ifndef	DEBUG
 	clnt = clnt_create (host, CLIENT_PLACES_PROG, CLIENT_PLACES_VERS, "udp");
@@ -27,6 +36,14 @@ client_places_prog_1(char* host, std::string city, std::string state)
 	if (result_1 == (list_ret *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}else{
+		//Print the results
+		if(result_1->list_ret_u.list.airport1.lat == -999){
+			printf("Location does not exist.\n");
+			return;
+		}else if (result_1->list_ret_u.list.airport1.lat == -1000){
+			printf("Please refine your query.\n");
+			return;
+		}
 		printf("%s\n", result_1->list_ret_u.list.name);
 		printf("code=%s, name=%s, state=%s, distance=%f \n\n", result_1->list_ret_u.list.airport1.code, result_1->list_ret_u.list.airport1.name, result_1->list_ret_u.list.airport1.state, result_1->list_ret_u.list.airport1.dist);
 		printf("code=%s, name=%s, state=%s, distance=%f \n\n", result_1->list_ret_u.list.airport2.code, result_1->list_ret_u.list.airport2.name, result_1->list_ret_u.list.airport2.state, result_1->list_ret_u.list.airport2.dist);
@@ -50,13 +67,16 @@ main (int argc, char *argv[])
 	std::string city;
 	std::string state;
 
+	//Client must provide the right amount of arguments.
 	if (argc < 4) {
 		printf ("usage: %s placeshost city state\n", argv[0]);
 		exit (1);
 	}
+
 	host = argv[1];
 	city = argv[2];
 	state = argv[3];
 	client_places_prog_1 (host, city, state);
-exit (0);
+	
+	exit (0);
 }

@@ -6,6 +6,7 @@
 #include <sstream>
 #include <stdio.h>
 #include <math.h>
+//Implementation file for KDTree
 
 KDTree::KDTree()
 {
@@ -48,12 +49,14 @@ void KDTree::buildAirportTree(std::string filename)
 	FILE* inFile = fopen(cstr, "r");
 	//Failed to open so exit with error msg.
 	if (inFile == NULL){
-		perror("Error");
+		std::string errormsg = "Error: " + filename;
+		perror(errormsg.c_str());
 		exit(1);
 	}
 	KDTree::airportPA ap;
 	char line[255];
 	fgets(line, 255, inFile); // Get rid of first line in file
+	//Parses file and makes tree
 	while (inFile) {
 		if (fgets(line, 255, inFile) != NULL) {
 			std::stringstream buffer;
@@ -63,6 +66,7 @@ void KDTree::buildAirportTree(std::string filename)
 			buffer >> ap.lat;
 			buffer >> ap.lon;
 			ap.name = "";
+			//Cities can have more than one word
 			while (!buffer.eof()) {
 				std::string temp;
 				buffer >> temp;
@@ -71,7 +75,6 @@ void KDTree::buildAirportTree(std::string filename)
 			int index = ap.name.rfind(',');
 			ap.state = ap.name.substr(index + 1, ap.name.length());
 			ap.name = ap.name.substr(0, index);
-			//cout << "city:" + city + " state:" + state << endl; 
 			insertKD(root, ap, 0);
 		}
 		else {
@@ -84,6 +87,7 @@ void KDTree::buildAirportTree(std::string filename)
 
 void KDTree::insertKD(KDTree::kDNode*& r, KDTree::airportPA newAp, unsigned depth)
 {
+	//Make new node if null and insert
 	if (r == NULL) {
 		r = new kDNode;
 		r->ap.code = newAp.code;
@@ -95,6 +99,7 @@ void KDTree::insertKD(KDTree::kDNode*& r, KDTree::airportPA newAp, unsigned dept
 		r->right = NULL;
 	}
 	else {
+		//Traverse down respective branch if not null
 		if (depth % 2 == 0) {
 			if (newAp.lat < r->ap.lat)
 				insertKD(r->left, newAp, depth + 1);

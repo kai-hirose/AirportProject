@@ -4,7 +4,7 @@
  */
 
 #include "ClientPlaces.h"
-//#include "Trie.h"
+#include "Trie.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <rpc/pmap_clnt.h>
@@ -58,8 +58,10 @@ client_places_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 	return;
 }
 
-//Trie myTrie;
-char* host;
+char* placesPath;
+char* placesHost;
+
+Trie trie1;
 
 int
 main (int argc, char **argv)
@@ -69,7 +71,9 @@ main (int argc, char **argv)
 		printf ("usage: %s host placesfilepath\n", argv[0]);
 		exit (1);
 	}
-	host = argv[1];
+	placesHost = argv[1];
+	placesPath = argv[2];
+	trie1.buildTrie(placesPath);
 	register SVCXPRT *transp;
 
 	pmap_unset (CLIENT_PLACES_PROG, CLIENT_PLACES_VERS);

@@ -6,6 +6,7 @@
 #include "PlacesAirports.h"
 #include "KDTree.h"
 
+//Function to copy the informationa from a KDTree's structure to the return variable's structure.
 void copyValues(airport* result, KDTree::airportPA val) {
 	result->code = strdup(const_cast<char*>(val.code.c_str()));
 	result->name = strdup(const_cast<char*>(val.name.c_str()));
@@ -15,27 +16,31 @@ void copyValues(airport* result, KDTree::airportPA val) {
 	result->dist = val.dist;
 }
 
-extern "C" KDTree myTree;
+extern "C" KDTree tree1;
 
 list_ret*
 call_airports_1_svc(coordinate* argp, struct svc_req* rqstp)
 {
+	//Variables
 	static list_ret  result;
 	KDTree::coordinatePA send;
 	send.lat = argp->lat;
 	send.lon = argp->lon;
-	KDTree::returnPA returnVals = myTree.fiveNearestAP(send);
+	KDTree::returnPA returnVals = tree1.fiveNearestAP(send);
 	
 	//Free previous memory
   	xdr_free((xdrproc_t)xdr_list_ret, (char *)&result);
 
+	//Copies values from the KDTree to the return variable.
 	copyValues(&result.list_ret_u.list.airport1, returnVals.array[0]);
 	copyValues(&result.list_ret_u.list.airport2, returnVals.array[1]);
 	copyValues(&result.list_ret_u.list.airport3, returnVals.array[2]);
 	copyValues(&result.list_ret_u.list.airport4, returnVals.array[3]);
 	copyValues(&result.list_ret_u.list.airport5, returnVals.array[4]);
+
 	//The places server will fill out the name of the place these airports are relative to before giving it back to the client.
 	result.list_ret_u.list.name = strdup("TBF");
+	
 	result.err = 0;
 	return &result;
 }
