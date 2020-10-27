@@ -20,12 +20,15 @@ extern "C" KDTree myTree;
 list_ret*
 call_airports_1_svc(coordinate* argp, struct svc_req* rqstp)
 {
-	/*still need to free memory*/
 	static list_ret  result;
 	KDTree::coordinatePA send;
 	send.lat = argp->lat;
 	send.lon = argp->lon;
 	KDTree::returnPA returnVals = myTree.fiveNearestAP(send);
+	
+	//Free previous memory
+  	xdr_free((xdrproc_t)xdr_list_ret, (char *)&result);
+
 	copyValues(&result.list_ret_u.list.airport1, returnVals.array[0]);
 	copyValues(&result.list_ret_u.list.airport2, returnVals.array[1]);
 	copyValues(&result.list_ret_u.list.airport3, returnVals.array[2]);

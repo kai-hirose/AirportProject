@@ -36,6 +36,7 @@ typedef struct place place;
 struct airport {
 	code code;
 	name name;
+	state state;
 	double lat;
 	double lon;
 	double dist;
@@ -43,10 +44,20 @@ struct airport {
 typedef struct airport airport;
 #endif
 
+#ifndef COORDINATE
+#define COORDINATE
+struct coordinate {
+	double lat;
+	double lon;
+};
+typedef struct coordinate coordinate;
+#endif
+
 #ifndef AIRPORTLIST
 #define AIRPORTLIST
 struct airportList {
 	name name;
+	coordinate coordinate;
 	airport airport1;
 	airport airport2;
 	airport airport3;
@@ -65,15 +76,6 @@ struct list_ret {
 	} list_ret_u;
 };
 typedef struct list_ret list_ret;
-#endif
-
-#ifndef COORDINATE
-#define COORDINATE
-struct coordinate {
-	double lat;
-	double lon;
-};
-typedef struct coordinate coordinate;
 #endif
 
 struct tNode {

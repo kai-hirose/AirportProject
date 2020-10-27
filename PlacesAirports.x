@@ -14,6 +14,7 @@ struct airport{
 
 struct airportList{
     name name;
+    coordinate coordinate;
     airport airport1;
     airport airport2;
     airport airport3;

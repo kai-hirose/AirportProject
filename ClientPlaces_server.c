@@ -6,7 +6,9 @@
 
 #include "ClientPlaces.h"
 #include "PlacesAirports.h"
+//#include "Trie.h"
 
+//extern "C" Trie Trie;
 extern "C" char* host;
 
 list_ret *
@@ -15,8 +17,8 @@ call_places_1_svc(name *argp, struct svc_req *rqstp)
 	list_ret*  result_1;
 	CLIENT *clnt;
 	coordinate  call_airports_1_arg;
-	call_airports_1_arg.lat = 47.441406;
-	call_airports_1_arg.lon = -122.293077;
+	call_airports_1_arg.lat = 40.704235;
+	call_airports_1_arg.lon = -73.917931;
 
 #ifndef	DEBUG
 	clnt = clnt_create (host, PLACES_AIRPORT_PROG, PLACES_AIRPORT_VERS, "udp");
@@ -30,10 +32,13 @@ call_places_1_svc(name *argp, struct svc_req *rqstp)
 	if (result_1 == (list_ret *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
+	
+	return result_1;
+	
 
+	//Free client memory before closing everything.
+    clnt_freeres(clnt, (xdrproc_t)xdr_list_ret, result_1);
 #ifndef	DEBUG
 	clnt_destroy (clnt);
 #endif	 /* DEBUG */
-
-	return result_1;
 }

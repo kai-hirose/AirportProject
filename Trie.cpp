@@ -95,36 +95,22 @@ void Trie::insert(tNode *root, string properName, string lat, string lon)
     for (int i = 0; i < properName.length(); i++)
     {
         int index = (int)toupper(properName[i]) - (int)'A';
-        //If the node'a array is not allocated.
-        //  cout << ((int)properName[i]) - 'A' << endl;
 
-        if (isalpha(properName[i]))
+        if (temp->array[index] == nullptr)
         {
-            //cout << index << endl;
+            temp->array[index] = genNode();
+        }
+        if (temp->index == -2)
+        {
             temp->index = index;
-            //  cout << "lat:" + to_string(temp->lat) + " lon:" + to_string(temp->lon) << endl;
         }
         else
         {
-            return;
-        }
-        if (temp->array[temp->index] == nullptr)
-        { 
-            temp->array[temp->index] = genNode();
-            if (temp->index == -2)
-            {
-                temp->index = index;
-            }
-            else if (temp->index >= 0)
-            {
-                temp->index = -1;
-                temp->lat = -1000;
-                temp->lon = -1000;
-            }
-            temp->lat = std::stod(lat);
-            temp->lon = std::stod(lon);
+            temp->index = -1;
         }
         temp = temp->array[index];
+        temp->lat = std::stod(lat);
+        temp->lon = std::stod(lon);
     }
 }
 
@@ -139,10 +125,10 @@ Trie::coordinate Trie::search(string input)
         }
         else
         {
-            cout << "blah blah" << endl;
             coordinate obj;
             obj.lat = -999;
             obj.lon = -999;
+            cout << "lat" + to_string(obj.lat) + " lon" + to_string(obj.lon) << endl;
             return obj;
         }
     }
@@ -157,19 +143,23 @@ Trie::coordinate Trie::search(string input)
         cout << name[i] << endl;
         if (temp == nullptr)
         {
-            cout << "failed" << endl;
+            coordinate obj;
+            obj.lat = -999;
+            obj.lon = -999;
+            cout << "lat" + to_string(obj.lat) + " lon" + to_string(obj.lon) << endl;
+            return obj;
         }
 
         //Invalid letter returns an invalid latitude that the main program checks.
         //Return the lat and lon stored in the node if index is not -1
         //-1 indicates there is more than one branch beneath.
-        if (i == name.length() - 1 && temp->index == -1){ 
+        if (i == name.length() - 1 && temp->index == -1)
+        {
             coordinate obj;
             obj.lat = -1000;
             obj.lon = -1000;
             cout << "lat" + to_string(obj.lat) + " lon" + to_string(obj.lon) << endl;
             return obj;
-
         }
         if (i == name.length() - 1)
         {
@@ -186,9 +176,8 @@ Trie::coordinate Trie::search(string input)
     returnVal.lat = -999;
     return returnVal;
 }
-
 int main()
 {
     Trie obj;
-    obj.search("Seattle");
+    obj.search("PattersonvilleRotterdamJunctionCdP");
 }
