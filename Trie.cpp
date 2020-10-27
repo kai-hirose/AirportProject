@@ -2,33 +2,8 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include "Trie.h"
 using namespace std;
-
-class Trie{
-public:
-        static const int SIZE = 26;
-        struct tNode
-        {
-                tNode *array[SIZE];
-                int index;
-                double lat;
-                double lon;
-        };
-
-        struct coordinate
-        {
-                double lat;
-                double lon;
-        };
-
-        Trie();
-        coordinate search(string);
-        void insert(tNode *root, string properName, string lat, string lon);
-        tNode* genNode(void);
-        string whiteRemover(string);
-private:
-        tNode *root;
-};
 
 
 
@@ -89,7 +64,7 @@ Trie::Trie()
                 if (stateCitySpaces[i] != ' ' && isalpha(stateCitySpaces[i]))
                 {
                     //Gets rid of special chars
-                    properName += tolower(stateCitySpaces[i]);
+                    properName += toupper(stateCitySpaces[i]);
                 }
             }
             //cout << properName << endl;
@@ -106,6 +81,7 @@ Trie::Trie()
 Trie::tNode *Trie::genNode()
 {
     tNode *tNodePtr = new tNode;
+    tNodePtr->index = -2;
     for (int i = 0; i < 26; i++)
     {
         tNodePtr->array[i] = nullptr;
@@ -118,9 +94,9 @@ void Trie::insert(tNode *root, string properName, string lat, string lon)
     tNode *temp = root;
     for (int i = 0; i < properName.length(); i++)
     {
-        int index = tolower(properName[i]) - 'a';
+        int index = (int)toupper(properName[i]) - (int)'A';
         //If the node'a array is not allocated.
-        //  cout << ((int)properName[i]) - 'a' << endl;
+        //  cout << ((int)properName[i]) - 'A' << endl;
 
         if (isalpha(properName[i]))
         {
@@ -133,8 +109,18 @@ void Trie::insert(tNode *root, string properName, string lat, string lon)
             return;
         }
         if (temp->array[temp->index] == nullptr)
-        {
+        { 
             temp->array[temp->index] = genNode();
+            if (temp->index == -2)
+            {
+                temp->index = index;
+            }
+            else if (temp->index >= 0)
+            {
+                temp->index = -1;
+                temp->lat = -1000;
+                temp->lon = -1000;
+            }
             temp->lat = std::stod(lat);
             temp->lon = std::stod(lon);
         }
@@ -149,7 +135,15 @@ Trie::coordinate Trie::search(string input)
     {
         if (isalpha(input[i]))
         {
-            name += tolower(input[i]);
+            name += toupper(input[i]);
+        }
+        else
+        {
+            cout << "blah blah" << endl;
+            coordinate obj;
+            obj.lat = -999;
+            obj.lon = -999;
+            return obj;
         }
     }
     cout << name << endl;
@@ -159,9 +153,9 @@ Trie::coordinate Trie::search(string input)
 
     for (int i = 0; i < name.length(); i++)
     {
-        int index = tolower(name[i]) - 'a';
+        int index = toupper(name[i]) - 'A';
         cout << name[i] << endl;
-        if (root == nullptr)
+        if (temp == nullptr)
         {
             cout << "failed" << endl;
         }
@@ -169,6 +163,14 @@ Trie::coordinate Trie::search(string input)
         //Invalid letter returns an invalid latitude that the main program checks.
         //Return the lat and lon stored in the node if index is not -1
         //-1 indicates there is more than one branch beneath.
+        if (i == name.length() - 1 && temp->index == -1){ 
+            coordinate obj;
+            obj.lat = -1000;
+            obj.lon = -1000;
+            cout << "lat" + to_string(obj.lat) + " lon" + to_string(obj.lon) << endl;
+            return obj;
+
+        }
         if (i == name.length() - 1)
         {
             returnVal.lat = temp->lat;
@@ -176,7 +178,7 @@ Trie::coordinate Trie::search(string input)
             cout << "lat" + to_string(returnVal.lat) + " lon" + to_string(returnVal.lon) << endl;
             return returnVal;
         }
-        // temp = &(temp->array[((int)tolower(name[i])) - 'a']);
+        // temp = &(temp->array[((int)toupper(name[i])) - 'A']);
         temp = temp->array[index];
     }
 
@@ -188,5 +190,5 @@ Trie::coordinate Trie::search(string input)
 int main()
 {
     Trie obj;
-       obj.search("Attu Station CDP");
+    obj.search("Seattle");
 }

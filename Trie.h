@@ -7,25 +7,29 @@
 #include <iostream>
 using namespace std;
 
-class Trie
-{
+class Trie{
 public:
-        struct tNode {
-                tNode* array;
+        static const int SIZE = 26;
+        struct tNode
+        {
+                tNode *array[SIZE]; 
                 int index;
                 double lat;
                 double lon;
         };
 
-        struct coordinate {
+        struct coordinate
+        {
                 double lat;
                 double lon;
         };
 
         Trie();
         coordinate search(string);
-
+        void insert(tNode *root, string properName, string lat, string lon);
+        tNode* genNode(void);
+        string whiteRemover(string);
 private:
-        tNode* root;
+        tNode *root;
 };
 #endif
