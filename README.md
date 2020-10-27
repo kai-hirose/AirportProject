@@ -7,10 +7,12 @@ A group project for distributed systems course.
 		KD-Tree Creation
 		5 Nearest Airports Search
 		KD-Tree Debug
+		airport file parsing
 	
-	Shuan Lee:
+	Shaun Lee:
 		Trie Creation
 		Trie Search
+		place file parsing
 		
 	Kai Hirose:
 		Data Structuring
@@ -36,19 +38,21 @@ A group project for distributed systems course.
 	Trie Search:
 		Used to find the latitude and longitude coordinates from the name of a place given by the user.
 		
-		
+# Improvements:
+	Trie Search: we change the tree structure in the design document. So, the search algorithm will do it from city and then state. It will search the city first which is seattle city and then WA.
 # References:
 
 	Reference for KD-Tree insert:
 	https://www.geeksforgeeks.org/k-dimensional-tree/
+	https://www.geeksforgeeks.org/trie-insert-and-search/
 		
 		
 # Strengths & Weaknesses:
 
-	Strengths:
+	Strengths: Started early, good planning, good communication
 		
 		
-	Weaknesses:
+	Weaknesses: roadblock with rpcgen, Unable to detect error easily, Circular dependencies in the makefile but is taken care of in the compiler, 
 		
 		
 # Running Instructions:
