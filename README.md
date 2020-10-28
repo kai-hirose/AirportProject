@@ -13,7 +13,7 @@ A group project for distributed systems course.
 		Trie Creation
 		Trie Search
 		place file parsing
-		
+		Trie debugging
 	Kai Hirose:
 		Data Structuring
 		RPC-Related Code
@@ -21,6 +21,9 @@ A group project for distributed systems course.
 		Makefile
 		Portions of the Trie Code
 		Fixing General Bugs
+		Imlpemented new Trie Algorithm
+		Trie debugging
+		RPC debugging
 	
 # Data Structures:
 	
@@ -39,7 +42,9 @@ A group project for distributed systems course.
 		Used to find the latitude and longitude coordinates from the name of a place given by the user.
 		
 # Improvements:
-	Trie Search: we change the tree structure in the design document. So, the search algorithm will do it from city and then state. It will search the city first which is seattle city and then WA.
+	Trie Search: we change the tree structure in the design document. So, the search algorithm will do it from city and then state. It will search the city first which is seattle city and then WA. 
+	
+	Trie Revision:
 # References:
 
 	Reference for KD-Tree insert:
@@ -49,10 +54,10 @@ A group project for distributed systems course.
 		
 # Strengths & Weaknesses:
 
-	Strengths: Started early, good planning, good communication
+	Strengths: Started early, good planning, good communication,Adapted to mistake
 		
 		
-	Weaknesses: roadblock with rpcgen, Unable to detect error easily, Circular dependencies in the makefile but is taken care of in the compiler, 
+	Weaknesses: roadblock with rpcgen, Unable to detect error easily, Circular dependencies in the makefile but is taken care of in the compiler, Misread instructions
 		
 		
 # Running Instructions:
