@@ -14,6 +14,7 @@ A group project for distributed systems course.
 		Trie Search
 		Place File Parsing
 		Trie Debugging
+		
 	Kai Hirose:
 		Data Structuring
 		RPC-Related Code
