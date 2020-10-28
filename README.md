@@ -13,7 +13,7 @@ A group project for distributed systems course.
 		Trie Creation
 		Trie Search
 		place file parsing
-		
+		Trie debugging
 	Kai Hirose:
 		Data Structuring
 		RPC-Related Code
@@ -22,6 +22,8 @@ A group project for distributed systems course.
 		Portions of the Trie Code
 		Fixing General Bugs
 		Imlpemented new Trie Algorithm
+		Trie debugging
+		RPC debugging
 	
 # Data Structures:
 	
@@ -50,10 +52,10 @@ A group project for distributed systems course.
 		
 # Strengths & Weaknesses:
 
-	Strengths: Started early, good planning, good communication
+	Strengths: Started early, good planning, good communication,Adapted to mistake
 		
 		
-	Weaknesses: roadblock with rpcgen, Unable to detect error easily, Circular dependencies in the makefile but is taken care of in the compiler,
+	Weaknesses: roadblock with rpcgen, Unable to detect error easily, Circular dependencies in the makefile but is taken care of in the compiler, Didn't read instructions carefully
 		
 		
 # Running Instructions:
