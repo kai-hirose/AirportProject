@@ -21,6 +21,7 @@ A group project for distributed systems course.
 		Makefile
 		Portions of the Trie Code
 		Fixing General Bugs
+		Imlpemented new Trie Algorithm
 	
 # Data Structures:
 	
@@ -52,7 +53,7 @@ A group project for distributed systems course.
 	Strengths: Started early, good planning, good communication
 		
 		
-	Weaknesses: roadblock with rpcgen, Unable to detect error easily, Circular dependencies in the makefile but is taken care of in the compiler, 
+	Weaknesses: roadblock with rpcgen, Unable to detect error easily, Circular dependencies in the makefile but is taken care of in the compiler,
 		
 		
 # Running Instructions:
