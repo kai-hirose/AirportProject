@@ -7,13 +7,13 @@ A group project for distributed systems course.
 		KD-Tree Creation
 		5 Nearest Airports Search
 		KD-Tree Debug
-		airport file parsing
+		Airport File Parsing
 	
 	Shaun Lee:
 		Trie Creation
 		Trie Search
-		place file parsing
-		Trie debugging
+		Place File Parsing
+		Trie Debugging
 	Kai Hirose:
 		Data Structuring
 		RPC-Related Code
@@ -21,9 +21,10 @@ A group project for distributed systems course.
 		Makefile
 		Portions of the Trie Code
 		Fixing General Bugs
-		Imlpemented new Trie Algorithm
-		Trie debugging
-		RPC debugging
+		Implemented New Trie Algorithm
+		Trie Debugging
+		Small Debugging in KD-Tree
+		RPC Debugging
 	
 # Data Structures:
 	
@@ -42,9 +43,11 @@ A group project for distributed systems course.
 		Used to find the latitude and longitude coordinates from the name of a place given by the user.
 		
 # Improvements:
-	Trie Search: we change the tree structure in the design document. So, the search algorithm will do it from city and then state. It will search the city first which is seattle city and then WA. 
+	Trie Search: 
+		We changed the tree structure in the design document so the search algorithm will do it from city and then state. It will search the city first which is seattle city and then WA.
 	
-	Trie Revision:
+	Trie Revision: Since we had to account for prefixes, we searched only the city portion. At each node, it will store states and their respective place values if there is a unique place as of that point in the search.
+	
 # References:
 
 	Reference for KD-Tree insert:
@@ -54,10 +57,17 @@ A group project for distributed systems course.
 		
 # Strengths & Weaknesses:
 
-	Strengths: Started early, good planning, good communication,Adapted to mistake
+	Strengths: 
+		Started early.
+		Good planning.
+		Good communication.
+		Adapted to mistakes.
 		
 		
-	Weaknesses: roadblock with rpcgen, Unable to detect error easily, Circular dependencies in the makefile but is taken care of in the compiler, Misread instructions
+	Weaknesses: 
+		Huge roadblock with rpcgen, unable to detect error easily.
+		Circular dependencies in the makefile but is taken care of in the compiler.
+		Misread instructions.
 		
 		
 # Running Instructions:
