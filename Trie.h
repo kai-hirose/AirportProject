@@ -4,6 +4,7 @@
 #include <iostream>
 using namespace std;
 
+//Header for the Trie class.
 #ifndef TRIE_H
 #define TRIE_H
 class Trie{
@@ -34,11 +35,11 @@ public:
         };
 
         void buildTrie(string filename);
-
         returnstruct search(string city, string state);
         void insert(tNode *root, string lat, string lon, string city, string state);
         tNode* genNode();
         string whiteRemover(string name);
+
 private:
         tNode *root;
 };

@@ -6,8 +6,8 @@
 #include <sstream>
 #include <stdio.h>
 #include <math.h>
-//Implementation file for KDTree
 
+//Implementation file for KDTree
 KDTree::KDTree()
 {
 	root = NULL;
@@ -55,27 +55,29 @@ void KDTree::buildAirportTree(std::string filename)
 	}
 	KDTree::airportPA ap;
 	char line[255];
-	fgets(line, 255, inFile); // Get rid of first line in file
+	fgets(line, 255, inFile); //First line is just formatting
 	//Parses file and makes tree
 	while (inFile) {
 		if (fgets(line, 255, inFile) != NULL) {
-			std::stringstream buffer;
-			buffer << line;
-			buffer >> ap.code;
-			ap.code = ap.code.substr(1, 3);
-			buffer >> ap.lat;
-			buffer >> ap.lon;
-			ap.name = "";
-			//Cities can have more than one word
-			while (!buffer.eof()) {
-				std::string temp;
-				buffer >> temp;
-				ap.name = ap.name + " " + temp;
+			if(line[0]!='\n'){
+				std::stringstream buffer;
+				buffer << line;
+				buffer >> ap.code;
+				ap.code = ap.code.substr(1, 3);
+				buffer >> ap.lat;
+				buffer >> ap.lon;
+				ap.name = "";
+				//Cities can have more than one word
+				while (!buffer.eof()) {
+					std::string temp;
+					buffer >> temp;
+					ap.name = ap.name + " " + temp;
+				}
+				int index = ap.name.rfind(',');
+				ap.state = ap.name.substr(index + 1, ap.name.length());
+				ap.name = ap.name.substr(0, index);
+				insertKD(root, ap, 0);
 			}
-			int index = ap.name.rfind(',');
-			ap.state = ap.name.substr(index + 1, ap.name.length());
-			ap.name = ap.name.substr(0, index);
-			insertKD(root, ap, 0);
 		}
 		else {
 			break;
@@ -216,6 +218,7 @@ void KDTree::printAirport(airportPA ap)
 	std::cout << ap.code << " " << ap.name << " " << ap.state << " " << ap.lat << " " << ap.lon << " " << ap.dist << std::endl;
 }
 
+//Print functions for personal testing.
 void KDTree::printTree() {
 	printTree(root);
 }

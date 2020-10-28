@@ -46,20 +46,21 @@ void Trie::buildTrie(string filename)
                 {
                     //Get the state, codes, and city for now
                     citywithstate.append(temp + " ");
-                    count = 0;
                 }
-                //After the "chunks" of text that make up the state, codes, and city
-                //Latitude and longitude are in the 7th and 8th "chunk"
+
+                //Manually get the lat and lon using column numbers because of their formatting.
                 string latlon = line.substr(143, line.length());
-                int index = latlon.rfind('-');
                 lat = whiteRemover(latlon.substr(0, 9));
                 lon = whiteRemover(latlon.substr(10,latlon.length()));
             }
+
             //Extract state and city from the text we saved earlier.
             state = citywithstate.substr(0, 2);
             city = citywithstate.substr(9, citywithstate.length());
             string properCity;
             string properState;
+
+            //Formate the characters
             for (int i = 0; i < city.length(); i++)
             {
                 if (city[i] != ' ' && isalpha(city[i]))
@@ -76,6 +77,8 @@ void Trie::buildTrie(string filename)
                     properState += toupper(state[i]);
                 }
             }
+
+            //Insert into trie after they are formatted.
             insert(root, lat, lon, properCity, properState);
             ss.clear();
         }
@@ -86,13 +89,8 @@ void Trie::buildTrie(string filename)
 Trie::tNode *Trie::genNode()
 {
     tNode *tNodePtr = new tNode;
+    //-2 index indicates nothing is stored there yet.
     tNodePtr->index = -2;
-    /* iffy
-    tNodePtr->lat[0] = lat;
-    tNodePtr->lon[0] = lon;
-    tNodePtr->city[0] = city;
-    tNodePtr->state[0] = state;
-    */
     for (int i = 0; i < 26; i++)
     {
         tNodePtr->array[i] = nullptr;
@@ -106,6 +104,8 @@ void Trie::insert(tNode *root, string lat, string lon, string city, string state
     for (int i = 0; i < city.length(); i++)
     {
         int nextLetter = (int)toupper(city[i]) - (int)'A';
+
+        //If next node is null, make one.
         if (temp->array[nextLetter] == nullptr)
         {
             temp->array[nextLetter] = genNode();
@@ -113,7 +113,7 @@ void Trie::insert(tNode *root, string lat, string lon, string city, string state
             temp->array[nextLetter]->lat[0] = std::stod(lat);
             temp->array[nextLetter]->lon[0] = std::stod(lon);
             temp->array[nextLetter]->city[0] = city;
-            temp->array[nextLetter]->state[0] = state;
+            temp->array[nextLetter]->state[0] = state; 
         }
         else
         {
@@ -126,25 +126,24 @@ void Trie::insert(tNode *root, string lat, string lon, string city, string state
                     exists = -2;
                 }
             }
-            
+
+            //Store values if an entry for that state is not stored there.
             if(exists == -1){
-                temp->array[nextLetter]->state[temp->index]=state;
-                temp->array[nextLetter]->city[temp->index]=city;
-                temp->array[nextLetter]->lat[temp->index]=std::stod(lat);
-                temp->array[nextLetter]->lon[temp->index]=std::stod(lon);
+                temp->array[nextLetter]->state[temp->array[nextLetter]->index]=state;
+                temp->array[nextLetter]->city[temp->array[nextLetter]->index]=city;
+                temp->array[nextLetter]->lat[temp->array[nextLetter]->index]=std::stod(lat);
+                temp->array[nextLetter]->lon[temp->array[nextLetter]->index]=std::stod(lon);
                 temp->array[nextLetter]->index+=1;
             }else if (exists >=0 ){
+                //Signify that more than one entry exists for that query in the state by putting an "X" after the state.
                 temp->array[nextLetter]->state[exists]=state+"X";
-                
             }
         }
         temp = temp->array[nextLetter];
     }
 }
 
-
-Trie::~Trie(){
-    
+Trie::~Trie(){ 
 }
 
 Trie::returnstruct Trie::search(string city, string state)
@@ -156,7 +155,6 @@ Trie::returnstruct Trie::search(string city, string state)
 
     //Query is empty.
     if(city.length()<1){
-        cout<<"Query empty"<<endl;
         returnVal.city = "Refine";
         returnVal.state = "Refine";
         returnVal.lat = -1000;
@@ -185,7 +183,7 @@ Trie::returnstruct Trie::search(string city, string state)
     {
         int index = properCity[i] - 'A';
         if (temp->array[index] == nullptr)
-        { /**change coordinatessss**/
+        {
             returnVal.lat = -999;
             returnVal.lon = -999;
             returnVal.city = "Nonexistent";
@@ -193,9 +191,7 @@ Trie::returnstruct Trie::search(string city, string state)
             return returnVal;
         }
 
-        //Invalid letter returns an invalid latitude that the main program checks.
-        //Return the lat and lon stored in the node if index is not -1
-        //-1 indicates there is more than one branch beneath.
+        //Return the values if unique state is found, otherwise return refine error code.
         if (i == properCity.length() - 1)
         {
             for(int i=0;i<index;i++){
@@ -223,12 +219,4 @@ Trie::returnstruct Trie::search(string city, string state)
     returnVal.city = "Nonexistent";
     returnVal.state = "Nonexistent";
     return returnVal;
-}
-
-int main(){
-    Trie myTrie;
-    myTrie.buildTrie("places2k.txt");
-    Trie::returnstruct test = myTrie.search("seattlec", "");
-    cout<<test.city<<test.state<<test.lat<<test.lon<<endl;
-    return 0;
 }

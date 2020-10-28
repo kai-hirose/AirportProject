@@ -16,6 +16,7 @@ void copyValues(airport* result, KDTree::airportPA val) {
 	result->dist = val.dist;
 }
 
+//External variable for the KDTree that is initialized in main located inside the svc file.
 extern "C" KDTree tree1;
 
 list_ret*
@@ -24,6 +25,8 @@ call_airports_1_svc(coordinate* argp, struct svc_req* rqstp)
 	//Variables
 	static list_ret  result;
 	KDTree::coordinatePA send;
+
+	//Initialize arguments and ask the KDTree for 5 NN
 	send.lat = argp->lat;
 	send.lon = argp->lon;
 	KDTree::returnPA returnVals = tree1.fiveNearestAP(send);
@@ -40,7 +43,7 @@ call_airports_1_svc(coordinate* argp, struct svc_req* rqstp)
 
 	//The places server will fill out the name of the place these airports are relative to before giving it back to the client.
 	result.list_ret_u.list.name = strdup("TBF");
-	
 	result.err = 0;
+	
 	return &result;
 }

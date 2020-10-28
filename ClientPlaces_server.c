@@ -9,7 +9,7 @@
 #include <string>
 #include "Trie.h"
 
-
+//External variables for the hostname and trie. They are instantiated in main at the svc file.
 extern "C" char* placesHost;
 extern "C" Trie trie1;
 
@@ -33,15 +33,16 @@ call_places_1_svc(name *argp, struct svc_req *rqstp)
 
 	std::string search_arg = *argp;
 	
+	//Set up the arguments and call the trie.
 	std::string city = search_arg.substr(0, search_arg.length()-2);
 	std::string state = search_arg.substr(search_arg.length()-2, search_arg.length());
-	cout<<city<< " " << state<<endl;
 	Trie::returnstruct trie_ret= trie1.search(city, state);
 	
 
 	//Free previous memory
   	xdr_free((xdrproc_t)xdr_list_ret, (char *)&result);
 
+	//Immediately return a dummy value when the query was illegitimate or not specific enough.
 	if(trie_ret.lat == -1000 || trie_ret.lat == -999){
 		fillValues(&result.list_ret_u.list.airport1);
 		fillValues(&result.list_ret_u.list.airport2);
@@ -58,6 +59,8 @@ call_places_1_svc(name *argp, struct svc_req *rqstp)
 			return &result;
 		}
 	}
+
+	//Set arguments before calling airports if the place is legitimate.
 	call_airports_1_arg.lat = trie_ret.lat;
 	call_airports_1_arg.lon = trie_ret.lon;
 
@@ -77,6 +80,11 @@ call_places_1_svc(name *argp, struct svc_req *rqstp)
 #ifndef	DEBUG
 	clnt_destroy (clnt);
 #endif	 /* DEBUG */
-	result_1->list_ret_u.list.name = *argp;
+
+	//Assign the name of city and state, latitude, and longitude before returning.
+	std::string return_name = trie_ret.city + ", " + trie_ret.state;
+	result_1->list_ret_u.list.name = strdup(const_cast<char*>(return_name.c_str()));
+	result_1->list_ret_u.list.coordinate.lat = trie_ret.lat;
+	result_1->list_ret_u.list.coordinate.lon = trie_ret.lon;
 	return result_1;
 }
