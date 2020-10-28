@@ -47,12 +47,15 @@ A group project for distributed systems course.
 	Trie Search: 
 		We changed the tree structure in the design document so the search algorithm will do it from city and then state. It will search the city first which is seattle city and then WA.
 	
-	Trie Revision: Since we had to account for prefixes, we searched only the city portion. At each node, it will store states and their respective place values if there is a unique place as of that point in the search.
+	Trie Revision: 
+		Since we had to account for prefixes, we searched only the city portion. At each node, it will store states and their respective place values if there is a unique place as of that point in the search.
 	
 # References:
 
 	Reference for KD-Tree insert:
 	https://www.geeksforgeeks.org/k-dimensional-tree/
+	
+	Reference for Trie algorithm:
 	https://www.geeksforgeeks.org/trie-insert-and-search/
 		
 		
